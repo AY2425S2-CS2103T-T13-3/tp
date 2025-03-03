@@ -317,32 +317,68 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `NUSMeet` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+### Use case: UC01 – Add Coursemate
+**Actor:** NUS Student  
 
-**MSS**
+**MSS:**  
+1. User types the command to add a new coursemate along with details.  
+2. NUSMeet validates the input and adds the coursemate.  
+3. NUSMeet displays confirmation of successful addition.  
+**Use case ends.**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+**Extensions:**  
+- **2a.** NUSMeet detects invalid or missing input.  
+  - **2a1.** NUSMeet displays an error message showing the correct command format.  
+  - **2a2.** User re-enters the corrected command with proper details.  
+    - Steps 2a1–2a2 repeat until input is valid.  
+    - **Use case resumes from step 2.**
 
-    Use case ends.
+- **\*a.** At any time, User cancels the operation by discarding typed input.  
+  - **Use case ends.**
 
-**Extensions**
+---
 
-* 2a. The list is empty.
+### Use case: UC02 – Tag Coursemates with Modules
+**Actor:** NUS Student  
 
-  Use case ends.
+**MSS:**  
+1. User types the command to tag existing coursemates with module codes and IDs.  
+2. NUSMeet validates the input and applies the tags.  
+3. NUSMeet displays confirmation of successful tagging.  
+**Use case ends.**
 
-* 3a. The given index is invalid.
+**Extensions:**  
+- **2a.** NUSMeet detects invalid or duplicate module codes or IDs.  
+  - **2a1.** NUSMeet displays an error message with the correct command format.  
+  - **2a2.** User re-enters corrected command with proper module codes and IDs.  
+    - Steps 2a1–2a2 repeat until input is valid.  
+    - **Use case resumes from step 2.**
 
-    * 3a1. AddressBook shows an error message.
+- **\*a.** At any time, User cancels the operation by discarding typed input.  
+  - **Use case ends.**
 
-      Use case resumes at step 2.
+---
 
-*{More to be added}*
+### Use case: UC03 – Find Coursemates by Module
+**Actor:** NUS Student  
+
+**MSS:**  
+1. User types the command to find coursemates by module code(s).  
+2. NUSMeet validates the input and displays a list of matching coursemates.  
+**Use case ends.**
+
+**Extensions:**  
+- **2a.** NUSMeet detects invalid or incorrectly formatted module codes.  
+  - **2a1.** NUSMeet displays an error message indicating the correct format for the find command.  
+  - **2a2.** User re-enters the command with the corrected format.  
+    - Steps 2a1–2a2 repeat until input is valid.  
+    - **Use case resumes from step 2.**
+
+- **\*a.** At any time, User cancels the operation by discarding typed input.  
+  - **Use case ends.**
+
 
 ### Non-Functional Requirements
 
