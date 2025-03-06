@@ -19,15 +19,15 @@ You can reach us at the email `e1300530@u.nus.edu`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Benedict Bryan Tjandra
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/bryantjandra.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/bryantjandra)]
+[[portfolio](team/bryantjandra.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
+* Responsibilities: UI + Code Quality
 
 ### Johnny Doe
 
