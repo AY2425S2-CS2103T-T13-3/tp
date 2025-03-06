@@ -29,14 +29,6 @@ You can reach us at the email `e1300530@u.nus.edu`
 * Role: Developer
 * Responsibilities: UI + Code Quality
 
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Data
 
 ### GONG HAOZHEN
 
