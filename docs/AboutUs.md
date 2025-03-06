@@ -38,15 +38,15 @@ You can reach us at the email `e1300530@u.nus.edu`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### GONG HAOZHEN
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/lsmnbmnc.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](https://github.com/LsmnBmnc)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Develop new features
 
 ### James Doe
 
