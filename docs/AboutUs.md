@@ -9,15 +9,15 @@ You can reach us at the email `e1300530@u.nus.edu`
 
 ## Project team
 
-### John Doe
+### Huang Zekai
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/hzk-lab.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[homepage](https://www.linkedin.com/in/zekai-huang-23213b28b)]
+[[github](https://github.com/hzk-lab)]
 
-* Role: Project Advisor
+* Role: Scheduling and tracking, including defining, assigning, and tracking project tasks.
+* Responsibilities: Data Structure + Threading
 
 ### Jane Doe
 
