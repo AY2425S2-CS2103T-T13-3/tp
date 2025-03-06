@@ -56,4 +56,4 @@ You can reach us at the email `e1300530@u.nus.edu`
 [[portfolio](team/prog_neuro_com.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Dev Ops + Threading
