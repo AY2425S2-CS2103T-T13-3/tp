@@ -42,10 +42,10 @@ You can reach us at the email `e1300530@u.nus.edu`
 
 ### Li Daoxin
 
-<img src="images/prog_neuro_com.png" width="200px">
+<img src="images/prog-neuro-com.png" width="200px">
 
 [[github](https://github.com/Prog-Neuro-Com)]
-[[portfolio](team/prog_neuro_com.md)]
+[[portfolio](team/prog-neuro-com)]
 
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
