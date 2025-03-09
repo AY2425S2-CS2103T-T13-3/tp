@@ -262,13 +262,16 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Manages a high volume of candidates across multiple hiring roles.
+* Prefers fast, efficient tools over traditional GUI-based applicant tracking systems (ATS).
+* Comfortable using CLI-based applications and prefers keyboard-driven workflows.
+* Needs quick access to candidate details, notes, and filtering functions for better decision-making.
+* Requires an organized and structured way to track candidate interactions, evaluations, and hiring progress.
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
+
+A highly efficient, CLI-driven contact management system that enables Apple’s HR recruiters to quickly add, retrieve, and evaluate candidates, reducing manual screening time and improving hiring accuracy.
+
 
 
 ### User stories
