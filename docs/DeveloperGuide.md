@@ -278,51 +278,87 @@ A highly efficient, CLI-driven contact management system that enables Apple’s 
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​   | I want to …​                                                                  | So that I can…​                                         |
-| -------- |-----------|-------------------------------------------------------------------------------|---------------------------------------------------------|
-| `* * *`  | new user  | see usage instructions                                                        | refer to instructions when I forget how to use the App  |
-| `* * *`  | recruiter | add a candidate’s name, contact details, and role applied for                 | keep track of them easily.                              
+| Priority | As a …​   | I want to …​                                                                  | So that I can…​                                                                       |
+|----------|-----------|-------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| `* * *`  | new user  | see usage instructions                                                        | refer to instructions when I forget how to use the App or when I start using the app. |
+| `* * *`  | recruiter | add a candidate’s name, contact details, and role applied for                 | keep track of them easily.                                                            
 |
-| `* * *`  | recruiter | remove outdated or irrelevant candidate records                               | maintain a clean list.                                  |
-| `* * *`  | recruiter | find candidates by their names or skills                                      | quickly locate specific individuals.                    |
-| `* *`    | recruiter | hide private contact details of my candidates                                 | minimize chance of possible candidates' privacy leakage |
-| `*`      | recruiter | sort candidates by criteria (e.g., years of experience, matching skill level) | see the best matches first                              |
-
+| `* * *`  | recruiter | list all candidates in the system                                             | see at a glance who is currently in the database.                                     
+|
+| `* * *`  | recruiter | remove outdated or irrelevant candidate records                               | maintain a clean list.                                                                |
+| `* * *`  | recruiter | find candidates by their names or skills                                      | quickly locate specific individuals.                                                  |
+| `* *`    | recruiter | hide private contact details of my candidates                                 | minimize chance of possible candidates' privacy leakage.                              |
+| `* *`    | recruiter | sort candidates by criteria (e.g., years of experience, matching skill level) | see the best matches first.                                                           |
+| `* *`    | recruiter | edit a candidate's details (e.g. phone, email)                                | correct mistakes and keep data accurate conveniently.                                 |
 *{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Sort Candidates**
+## Use Case: UC01 - Sort Candidates
+
+**System**: AddressBook (RecruitIntel)  
+**Actor**: HR Recruiter
 
 **MSS**
-
 1. HR Recruiter chooses to sort candidates.
-2. CMS requests sorting criteria (e.g., name, experience, role, date added).
+2. **System** requests the sorting criteria (e.g., name, experience, role, date added).
 3. HR Recruiter enters the sorting criteria and order (ascending or descending).
-4. CMS sorts the candidates based on the specified criteria.
-5. CMS displays the sorted list.
-
+4. **System** sorts the candidates based on the specified criteria.
+5. **System** displays the sorted list.  
    Use case ends.
 
 **Extensions**
 
-* 3a. CMS detects an invalid sorting criteria.
-  * 3a1. CMS requests the recruiter to enter a valid sorting criteria.
-  * 3a2. HR Recruiter enters a new valid criteria.
-Steps 3a1-3a2 are repeated until the input is valid.
-Use case resumes from step 4.
+- **3a.** **System** detects an invalid sorting criterion.
+    - **3a1.** **System** requests the recruiter to enter a valid sorting criterion.
+    - **3a2.** HR Recruiter enters a new valid criterion.
+    - Steps 3a1–3a2 are repeated until the input is valid.  
+      Use case resumes from step 4.
 
-* 3b. There are no candidates in the system.
-  * 3b1. CMS notifies the recruiter that sorting is not possible.
-  Use case ends.
+- **3b.** There are no candidates in the system.
+    - **3b1.** **System** notifies the recruiter that sorting is not possible.  
+      Use case ends.
 
-* a. At any time, HR Recruiter chooses to cancel the sorting operation.
-  * a1. CMS requests confirmation for cancellation.
-  * a2. HR Recruiter confirms the cancellation.
+- **\*a.** At any time, HR Recruiter chooses to cancel the sorting operation.
+    - **\*a1.** **System** requests confirmation for cancellation.
+    - **\*a2.** HR Recruiter confirms the cancellation.  
+      Use case ends.
+
+
+## Use Case: UC02 - Add New Candidate
+
+**System**: AddressBook (RecruitIntel)  
+**Actor**: HR Recruiter
+
+**MSS**
+1. HR Recruiter adds a new candidate.
+2. **System** validates the details.
+3. **System** creates a new candidate record and displays a success message.  
+   Use case ends.
+
+**Extensions**
+
+- **1a.** HR Recruiter omits a mandatory detail.
+    - **1a1.** **System** shows an error message and requests correction.
+    - **1a2.** HR Recruiter enters the required detail.
+    - Steps 1a1–1a2 are repeated until all mandatory details are provided.  
+      Use case resumes from step 2.
+
+- **2a.** **System** detects invalid data (e.g., phone is non-numeric or email is malformed).
+    - **2a1.** **System** shows an error message and requests correction.
+    - **2a2.** HR Recruiter enters valid data.
+    - Steps 2a1–2a2 are repeated until all data are valid.  
+      Use case resumes from step 3.
+
+- **2b.** **System** detects a duplicate candidate (same name + phone).
+    - **2b1.** **System** notifies the recruiter that the candidate already exists.
+    - Steps 2b1–2b2 are repeated until all data are valid.  
+      Use case resumes from step 3.
   
-  Use case ends.
+      Use case ends.
+
 
 
   *{More to be added}*
@@ -336,13 +372,10 @@ Use case resumes from step 4.
 5.  Application should maintain user data privacy and security, adhering to the latest data protection regulations.
 6.  The system should be user-friendly, with an interface that requires no more than 20 minutes of training for new users to perform basic operations.
 
-
-
 *{More to be added}*
 
 ### Glossary
-
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **AB3**: The codebase provided as a starting point for this project. RecruitIntel extends and modifies AB3.
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **API (Application Programming Interface)**: Set of rules and specifications that software programs can follow to communicate with each other.
 * **CLI (Command Line Interface)**: A user interface navigated by typing commands into a terminal or console window.
