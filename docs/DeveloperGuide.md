@@ -275,14 +275,15 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​   | I want to …​                                                                  | So that I can…​                                         |
+| -------- |-----------|-------------------------------------------------------------------------------|---------------------------------------------------------|
+| `* * *`  | new user  | see usage instructions                                                        | refer to instructions when I forget how to use the App  |
+| `* * *`  | recruiter | add a candidate’s name, contact details, and role applied for                 | keep track of them easily.                              
+|
+| `* * *`  | recruiter | remove outdated or irrelevant candidate records                               | maintain a clean list.                                  |
+| `* * *`  | recruiter | find candidates by their names or skills                                      | quickly locate specific individuals.                    |
+| `* *`    | recruiter | hide private contact details of my candidates                                 | minimize chance of possible candidates' privacy leakage |
+| `*`      | recruiter | sort candidates by criteria (e.g., years of experience, matching skill level) | see the best matches first                              |
 
 *{More to be added}*
 
