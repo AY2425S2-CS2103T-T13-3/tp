@@ -293,30 +293,38 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Sort Candidates**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. HR Recruiter chooses to sort candidates.
+2. CMS requests sorting criteria (e.g., name, experience, role, date added).
+3. HR Recruiter enters the sorting criteria and order (ascending or descending).
+4. CMS sorts the candidates based on the specified criteria.
+5. CMS displays the sorted list.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 3a. CMS detects an invalid sorting criteria.
+  * 3a1. CMS requests the recruiter to enter a valid sorting criteria.
+  * 3a2. HR Recruiter enters a new valid criteria.
+Steps 3a1-3a2 are repeated until the input is valid.
+Use case resumes from step 4.
 
+* 3b. There are no candidates in the system.
+  * 3b1. CMS notifies the recruiter that sorting is not possible.
   Use case ends.
 
-* 3a. The given index is invalid.
+* a. At any time, HR Recruiter chooses to cancel the sorting operation.
+  * a1. CMS requests confirmation for cancellation.
+  * a2. HR Recruiter confirms the cancellation.
+  
+  Use case ends.
 
-    * 3a1. AddressBook shows an error message.
 
-      Use case resumes at step 2.
-
-*{More to be added}*
+  *{More to be added}*
 
 ### Non-Functional Requirements
 
