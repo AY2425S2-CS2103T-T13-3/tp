@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Course;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FriendLevel;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -28,7 +30,9 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedTag> tagged = new ArrayList<>();
+    private final List<JsonAdaptedCourse> courses = new ArrayList<>();
+    private final String friendLevel;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -36,14 +40,20 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tagged") List<JsonAdaptedTag> tagged,
+            @JsonProperty("courses") List<JsonAdaptedCourse> courses,
+            @JsonProperty("friendLevel") String friendLevel) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        if (tags != null) {
-            this.tags.addAll(tags);
+        if (tagged != null) {
+            this.tagged.addAll(tagged);
         }
+        if (courses != null) {
+            this.courses.addAll(courses);
+        }
+        this.friendLevel = friendLevel;
     }
 
     /**
@@ -54,9 +64,13 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
+        tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        courses.addAll(source.getCourses().stream()
+                .map(JsonAdaptedCourse::new)
+                .collect(Collectors.toList()));
+        friendLevel = source.getFriendLevel().toString();
     }
 
     /**
@@ -66,8 +80,13 @@ class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
+        for (JsonAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+
+        final List<Course> personCourses = new ArrayList<>();
+        for (JsonAdaptedCourse course : courses) {
+            personCourses.add(course.toModelType());
         }
 
         if (name == null) {
@@ -103,7 +122,21 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+
+        if (courses.isEmpty()) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Course.class.getSimpleName()));
+        }
+        final Set<Course> modelCourses = new HashSet<>(personCourses);
+
+        if (friendLevel == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, FriendLevel.class.getSimpleName()));
+        }
+        if (!FriendLevel.isValidFriendLevel(friendLevel)) {
+            throw new IllegalValueException(FriendLevel.MESSAGE_CONSTRAINTS);
+        }
+        final FriendLevel modelFriendLevel = FriendLevel.valueOf(friendLevel.toUpperCase());
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelCourses, modelFriendLevel);
     }
 
 }

@@ -22,7 +22,9 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Course;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FriendLevel;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -100,8 +102,11 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Course> updatedCourses = editPersonDescriptor.getCourses().orElse(personToEdit.getCourses());
+        FriendLevel updatedFriendLevel = editPersonDescriptor.getFriendLevel().orElse(personToEdit.getFriendLevel());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedCourses, 
+                         updatedFriendLevel);
     }
 
     @Override
@@ -138,6 +143,8 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Set<Course> courses;
+        private FriendLevel friendLevel;
 
         public EditPersonDescriptor() {}
 
@@ -151,13 +158,15 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setCourses(toCopy.courses);
+            setFriendLevel(toCopy.friendLevel);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, courses, friendLevel);
         }
 
         public void setName(Name name) {
@@ -209,6 +218,22 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setCourses(Set<Course> courses) {
+            this.courses = (courses != null) ? new HashSet<>(courses) : null;
+        }
+
+        public Optional<Set<Course>> getCourses() {
+            return (courses != null) ? Optional.of(Collections.unmodifiableSet(courses)) : Optional.empty();
+        }
+
+        public void setFriendLevel(FriendLevel friendLevel) {
+            this.friendLevel = friendLevel;
+        }
+
+        public Optional<FriendLevel> getFriendLevel() {
+            return Optional.ofNullable(friendLevel);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -225,7 +250,9 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(courses, otherEditPersonDescriptor.courses)
+                    && Objects.equals(friendLevel, otherEditPersonDescriptor.friendLevel);
         }
 
         @Override
@@ -236,6 +263,8 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("tags", tags)
+                    .add("courses", courses)
+                    .add("friendLevel", friendLevel)
                     .toString();
         }
     }

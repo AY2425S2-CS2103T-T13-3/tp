@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.model.person.Person;
 
 /**
@@ -15,6 +16,8 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String[] TAG_COLORS = { "teal", "red", "yellow", "blue", "orange", "brown", "green", "pink",
+        "black", "grey" };
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -40,6 +43,10 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private FlowPane courses;
+    @FXML
+    private FlowPane friendLevel;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -52,8 +59,36 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+        
+        // Add tags
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        
+        // Add friend level
+        friendLevel.getChildren().add(new Label(person.getFriendLevel().toString()));
+        
+        // Add courses
+        person.getCourses().stream()
+                .sorted(Comparator.comparing(course -> course.courseName))
+                .forEach(course -> courses.getChildren().add(new Label(course.courseName)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonCard)) {
+            return false;
+        }
+
+        // state check
+        PersonCard card = (PersonCard) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
     }
 }
