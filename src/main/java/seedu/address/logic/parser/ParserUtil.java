@@ -11,8 +11,10 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Team;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,6 +30,7 @@ public class ParserUtil {
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
+        requireNonNull(oneBasedIndex);
         String trimmedIndex = oneBasedIndex.trim();
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             throw new ParseException(MESSAGE_INVALID_INDEX);
@@ -93,6 +96,36 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code String jobPosition} into a {@code JobPosition}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code jobPosition} is invalid.
+     */
+    public static JobPosition parseJobPosition(String jobPosition) throws ParseException {
+        requireNonNull(jobPosition);
+        String trimmedJobPosition = jobPosition.trim();
+        if (!JobPosition.isValidJobPosition(trimmedJobPosition)) {
+            throw new ParseException(JobPosition.MESSAGE_CONSTRAINTS);
+        }
+        return new JobPosition(trimmedJobPosition);
+    }
+
+    /**
+     * Parses a {@code String team} into a {@code Team}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code team} is invalid.
+     */
+    public static Team parseTeam(String team) throws ParseException {
+        requireNonNull(team);
+        String trimmedTeam = team.trim();
+        if (!Team.isValidTeam(trimmedTeam)) {
+            throw new ParseException(Team.MESSAGE_CONSTRAINTS);
+        }
+        return new Team(trimmedTeam);
     }
 
     /**
