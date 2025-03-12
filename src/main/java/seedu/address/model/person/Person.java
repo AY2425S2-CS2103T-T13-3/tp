@@ -11,7 +11,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Candidate in RecruitIntel.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
@@ -23,17 +23,22 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final JobPosition jobPosition;
+    private final Team team;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, JobPosition jobPosition,
+                  Team team, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, jobPosition, team, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.jobPosition = jobPosition;
+        this.team = team;
         this.tags.addAll(tags);
     }
 
@@ -53,6 +58,14 @@ public class Person {
         return address;
     }
 
+    public JobPosition getJobPosition() {
+        return jobPosition;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -62,8 +75,8 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both candidates have the same name.
+     * This defines a weaker notion of equality between two candidates.
      */
     public boolean isSamePerson(Person otherPerson) {
         if (otherPerson == this) {
@@ -75,8 +88,8 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both candidates have the same identity and data fields.
+     * This defines a stronger notion of equality between two candidates.
      */
     @Override
     public boolean equals(Object other) {
@@ -94,13 +107,15 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && jobPosition.equals(otherPerson.jobPosition)
+                && team.equals(otherPerson.team)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, jobPosition, team, tags);
     }
 
     @Override
@@ -110,6 +125,8 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("jobPosition", jobPosition)
+                .add("team", team)
                 .add("tags", tags)
                 .toString();
     }
