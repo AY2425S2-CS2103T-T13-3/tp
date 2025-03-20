@@ -72,7 +72,8 @@ public interface Model {
     /**
      * Replaces the given candidate {@code target} with {@code editedPerson}.
      * {@code target} must exist in the RecruitIntel.
-     * The candidate identity of {@code editedPerson} must not be the same as another existing candidate in the RecruitIntel.
+     * The candidate identity of {@code editedPerson} must not be the same as
+     * another existing candidate in the RecruitIntel.
      */
     void setPerson(Person target, Person editedPerson);
 
