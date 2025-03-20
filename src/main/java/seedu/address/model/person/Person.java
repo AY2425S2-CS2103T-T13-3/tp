@@ -84,8 +84,9 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getName().equals(getName());
+                && otherPerson.getEmail().equals(getEmail());
     }
+
 
     /**
      * Returns true if both candidates have the same identity and data fields.

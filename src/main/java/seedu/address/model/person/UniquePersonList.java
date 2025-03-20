@@ -36,15 +36,19 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.stream().anyMatch(toCheck::isSamePerson);
     }
 
+
     /**
      * Adds a person to the list.
      * The person must not already exist in the list.
      */
     public void add(Person toAdd) {
         requireNonNull(toAdd);
+
         if (contains(toAdd)) {
             throw new DuplicatePersonException();
         }
+
+
         internalList.add(toAdd);
     }
 
