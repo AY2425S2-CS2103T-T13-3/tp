@@ -24,7 +24,7 @@ import seedu.address.model.tag.Tag;
  */
 class JsonAdaptedPerson {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Candidate's %s field is missing!";
 
     private final String name;
     private final String phone;
@@ -69,7 +69,7 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted person object into the model's {@code Candidate} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
