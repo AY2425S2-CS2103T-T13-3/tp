@@ -83,10 +83,8 @@ public class Person {
             return true;
         }
 
-
         return otherPerson != null
                 && otherPerson.getEmail().equals(getEmail());
-
     }
 
 
