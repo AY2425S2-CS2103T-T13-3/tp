@@ -1,20 +1,42 @@
-
 .error {
-    -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+    -fx-text-fill: #ff3b30 !important;
 }
 
 .list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: #383838;
+    -fx-background: #ffffff;
 }
 
 .tag-selector {
     -fx-border-width: 1;
-    -fx-border-color: white;
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
+    -fx-border-color: #e6e6e6;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
 }
 
 .tooltip-text {
-    -fx-text-fill: white;
+    -fx-text-fill: #333333;
+}
+
+/* Apple-style candidate card */
+.candidate-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-padding: 12px;
+}
+
+/* Apple-style section headers */
+.section-header {
+    -fx-font-family: "SF Pro Display", "Helvetica Neue", Helvetica, sans-serif;
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Apple-style command prompt */
+.command-prompt {
+    -fx-font-family: "SF Mono", "Menlo", monospace;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #0071e3;
 }

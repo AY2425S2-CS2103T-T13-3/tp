@@ -44,6 +44,8 @@ public class PersonCard extends UiPart<Region> {
     private Label team;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label interviewerNotes;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -60,6 +62,19 @@ public class PersonCard extends UiPart<Region> {
         team.setText(person.getTeam().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> {
+                    Label tagLabel = new Label(tag.tagName);
+                    tags.getChildren().add(tagLabel);
+                });
+
+        interviewerNotes.setText("");
+    }
+
+    /**
+     * Updates the interviewer notes display.
+     * This method would be called when notes are updated via CLI commands.
+     */
+    public void updateNotes(String notes) {
+        interviewerNotes.setText(notes);
     }
 }
