@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Team;
@@ -32,6 +33,7 @@ class JsonAdaptedPerson {
     private final String address;
     private final String jobPosition;
     private final String team;
+    private final String notes;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -41,6 +43,7 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("jobPosition") String jobPosition, @JsonProperty("team") String team,
+                             @JsonProperty("notes") String notes,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
@@ -48,6 +51,7 @@ class JsonAdaptedPerson {
         this.address = address;
         this.jobPosition = jobPosition;
         this.team = team;
+        this.notes = notes;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -63,13 +67,14 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         jobPosition = source.getJobPosition().value;
         team = source.getTeam().value;
+        notes = source.getNotes().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Candidate} object.
+     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
@@ -129,8 +134,11 @@ class JsonAdaptedPerson {
         }
         final Team modelTeam = new Team(team);
 
+        final Notes modelNotes = new Notes(notes != null ? notes : "");
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelJobPosition, modelTeam, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelJobPosition,
+                modelTeam, modelTags, modelNotes);
     }
 
 }
