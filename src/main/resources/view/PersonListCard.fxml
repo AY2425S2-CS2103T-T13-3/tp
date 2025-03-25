@@ -40,16 +40,16 @@
 
     <VBox alignment="TOP_LEFT" minHeight="140" GridPane.columnIndex="1" styleClass="notes-section">
       <padding>
-        <Insets top="8" right="10" bottom="8" left="5" />
+        <Insets top="8" right="10" bottom="8" left="10" />
       </padding>
       <Label text="Interviewer Notes:" styleClass="notes-header" />
       <Region minHeight="8" />
 
       <StackPane styleClass="notes-display-container" VBox.vgrow="ALWAYS">
         <padding>
-          <Insets top="5" right="5" bottom="5" left="5" />
+          <Insets top="8" right="8" bottom="8" left="8" />
         </padding>
-        <Label fx:id="interviewerNotes" text="" styleClass="notes-content" wrapText="true" />
+        <Label fx:id="interviewerNotes" text="" styleClass="notes-content" wrapText="true" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" />
       </StackPane>
     </VBox>
   </GridPane>

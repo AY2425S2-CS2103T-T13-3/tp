@@ -66,8 +66,7 @@ public class PersonCard extends UiPart<Region> {
                     Label tagLabel = new Label(tag.tagName);
                     tags.getChildren().add(tagLabel);
                 });
-
-        interviewerNotes.setText("");
+        interviewerNotes.setText(person.getNotes().value);
     }
 
     /**
