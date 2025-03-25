@@ -68,6 +68,7 @@ public class NotesCommand extends Command {
         );
 
         model.setPerson(personToAddNotesTo, updatedPerson);
+        targetPerson = updatedPerson;
         lastCommand = this;
         return new CommandResult(String.format(MESSAGE_ADD_NOTES_SUCCESS, targetIndex.getOneBased(), notes.value));
     }
@@ -91,6 +92,7 @@ public class NotesCommand extends Command {
         notes = temptNotes;
 
         model.setPerson(personToRemoveNotesFrom, updatedPerson);
+        targetPerson = updatedPerson;
         lastCommand = this;
         return new CommandResult(String.format(MESSAGE_ADD_NOTES_SUCCESS, targetIndex.getOneBased(), notes.value));
     }

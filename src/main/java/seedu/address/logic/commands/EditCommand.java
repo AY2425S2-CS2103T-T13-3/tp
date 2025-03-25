@@ -27,6 +27,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Team;
@@ -112,16 +113,17 @@ public class EditCommand extends Command {
         JobPosition updatedJobPosition = editPersonDescriptor.getJobPosition().orElse(personToEdit.getJobPosition());
         Team updatedTeam = editPersonDescriptor.getTeam().orElse(personToEdit.getTeam());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Notes notes = personToEdit.getNotes();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedJobPosition,
-                updatedTeam, updatedTags);
+                updatedTeam, updatedTags, notes);
     }
 
     @Override
     public CommandResult undo(Model model) throws CommandException {
         requireNonNull(model);
 
-        model.setPerson(personToEdit, editedPerson);
+        model.setPerson(editedPerson, personToEdit);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         Person temp = personToEdit;
@@ -168,6 +170,7 @@ public class EditCommand extends Command {
         private JobPosition jobPosition;
         private Team team;
         private Set<Tag> tags;
+        private Notes notes;
 
         public EditPersonDescriptor() {}
 
@@ -183,6 +186,11 @@ public class EditCommand extends Command {
             setJobPosition(toCopy.jobPosition);
             setTeam(toCopy.team);
             setTags(toCopy.tags);
+            setNotes(toCopy.notes);
+        }
+
+        private void setNotes(Notes notes) {
+            this.notes = notes;
         }
 
         /**
@@ -288,6 +296,7 @@ public class EditCommand extends Command {
                     .add("jobPosition", jobPosition)
                     .add("team", team)
                     .add("tags", tags)
+                    .add("notes", notes)
                     .toString();
         }
     }

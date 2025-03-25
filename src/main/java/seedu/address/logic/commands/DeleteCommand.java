@@ -33,6 +33,9 @@ public class DeleteCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+    /**
+     * Creates a DeleteCommand with a person.
+     */
     public DeleteCommand(Person person) {
         this.targetIndex = Index.fromZeroBased(0);
         this.deletedPerson = person;

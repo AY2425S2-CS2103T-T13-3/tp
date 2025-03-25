@@ -8,7 +8,7 @@ import seedu.address.model.Model;
  */
 public abstract class Command {
 
-    public static Command lastCommand = null;
+    protected static Command lastCommand = null;
 
     /**
      * Executes the command and returns the result message.
