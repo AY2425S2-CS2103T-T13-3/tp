@@ -27,7 +27,9 @@ public class NotesCommand extends Command {
     public static final String MESSAGE_ADD_NOTES_SUCCESS = "Note added to candidate #%1$d: \"%2$s\"";
 
     private final Index targetIndex;
-    private final Notes notes;
+    private Notes notes;
+    private Person targetPerson;
+    private Notes lastNotes;
 
     /**
      * @param targetIndex of the candidate in the filtered candidate list to add notes to
@@ -51,6 +53,9 @@ public class NotesCommand extends Command {
         }
 
         Person personToAddNotesTo = lastShownList.get(targetIndex.getZeroBased());
+        targetPerson = personToAddNotesTo;
+        lastNotes = personToAddNotesTo.getNotes();
+
         Person updatedPerson = new Person(
                 personToAddNotesTo.getName(),
                 personToAddNotesTo.getPhone(),
@@ -63,7 +68,30 @@ public class NotesCommand extends Command {
         );
 
         model.setPerson(personToAddNotesTo, updatedPerson);
+        lastCommand = this;
+        return new CommandResult(String.format(MESSAGE_ADD_NOTES_SUCCESS, targetIndex.getOneBased(), notes.value));
+    }
 
+    @Override
+    public CommandResult undo(Model model) throws CommandException {
+        requireNonNull(model);
+        Person personToRemoveNotesFrom = targetPerson;
+        Person updatedPerson = new Person(
+                personToRemoveNotesFrom.getName(),
+                personToRemoveNotesFrom.getPhone(),
+                personToRemoveNotesFrom.getEmail(),
+                personToRemoveNotesFrom.getAddress(),
+                personToRemoveNotesFrom.getJobPosition(),
+                personToRemoveNotesFrom.getTeam(),
+                personToRemoveNotesFrom.getTags(),
+                lastNotes
+        );
+        Notes temptNotes = lastNotes;
+        lastNotes = notes;
+        notes = temptNotes;
+
+        model.setPerson(personToRemoveNotesFrom, updatedPerson);
+        lastCommand = this;
         return new CommandResult(String.format(MESSAGE_ADD_NOTES_SUCCESS, targetIndex.getOneBased(), notes.value));
     }
 

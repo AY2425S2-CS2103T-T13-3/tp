@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -58,14 +59,21 @@ public class AddCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-
         if (model.hasPerson(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-
         model.addPerson(toAdd);
+        lastCommand = this;
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    @Override
+    public CommandResult undo(Model model) throws CommandException {
+        model.deletePerson(toAdd);
+        lastCommand = new DeleteCommand(toAdd);
+        return new CommandResult(String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS
+                , Messages.format(toAdd)));
     }
 
     @Override

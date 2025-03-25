@@ -20,6 +20,7 @@ public class Messages {
             "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_NOTES_CHARACTER_LIMIT_EXCEEDED =
             "Notes cannot exceed 450 characters. Current length: %1$d characters.";
+    public static final String MESSAGE_NO_COMMAND_TO_UNDO = "There is no command to undo.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
