@@ -41,7 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the person list with {@code candidates}.
+     * Replaces the contents of the candidates list with {@code candidates}.
      * {@code candidates} must not contain duplicate persons.
      */
     public void setPersons(List<Person> persons) {

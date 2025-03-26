@@ -35,6 +35,11 @@ public class FindCommand extends Command {
     }
 
     @Override
+    public CommandResult undo(Model model) {
+        return new CommandResult("FindCommand should not appear in the undo stack");
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

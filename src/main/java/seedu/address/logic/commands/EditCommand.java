@@ -27,6 +27,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Team;
@@ -61,6 +62,9 @@ public class EditCommand extends Command {
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
+    private Person personToEdit;
+    private Person editedPerson;
+
     /**
      * @param index of the candidate in the filtered candidate list to edit
      * @param editPersonDescriptor details to edit the candidate with
@@ -82,8 +86,8 @@ public class EditCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        personToEdit = lastShownList.get(index.getZeroBased());
+        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -91,6 +95,7 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        lastCommand = this;
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
@@ -108,9 +113,25 @@ public class EditCommand extends Command {
         JobPosition updatedJobPosition = editPersonDescriptor.getJobPosition().orElse(personToEdit.getJobPosition());
         Team updatedTeam = editPersonDescriptor.getTeam().orElse(personToEdit.getTeam());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Notes notes = personToEdit.getNotes();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedJobPosition,
-                updatedTeam, updatedTags);
+                updatedTeam, updatedTags, notes);
+    }
+
+    @Override
+    public CommandResult undo(Model model) throws CommandException {
+        requireNonNull(model);
+
+        model.setPerson(editedPerson, personToEdit);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        Person temp = personToEdit;
+        personToEdit = editedPerson;
+        editedPerson = temp;
+
+        lastCommand = this;
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
     @Override
@@ -149,6 +170,7 @@ public class EditCommand extends Command {
         private JobPosition jobPosition;
         private Team team;
         private Set<Tag> tags;
+        private Notes notes;
 
         public EditPersonDescriptor() {}
 
@@ -164,6 +186,11 @@ public class EditCommand extends Command {
             setJobPosition(toCopy.jobPosition);
             setTeam(toCopy.team);
             setTags(toCopy.tags);
+            setNotes(toCopy.notes);
+        }
+
+        private void setNotes(Notes notes) {
+            this.notes = notes;
         }
 
         /**
@@ -269,6 +296,7 @@ public class EditCommand extends Command {
                     .add("jobPosition", jobPosition)
                     .add("team", team)
                     .add("tags", tags)
+                    .add("notes", notes)
                     .toString();
         }
     }
