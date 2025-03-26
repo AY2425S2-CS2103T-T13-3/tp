@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -23,7 +24,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
         if (!trimmedArgs.isEmpty()) {
             logger.info("Invalid arguments provided for undo command");
             throw new ParseException(
-                    String.format(UndoCommand.MESSAGE_USAGE));
+                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
         }
         return new UndoCommand();
     }

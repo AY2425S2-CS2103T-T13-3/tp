@@ -36,6 +36,12 @@ public class UndoCommand extends Command {
     }
 
     @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || other instanceof UndoCommand; // instanceof handles nulls
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .toString();
