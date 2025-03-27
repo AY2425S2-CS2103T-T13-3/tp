@@ -19,4 +19,5 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> Notes
+Person *--> Team
 @enduml
