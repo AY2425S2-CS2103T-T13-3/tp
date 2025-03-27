@@ -162,9 +162,9 @@ public class Person {
                 .add("jobPosition", jobPosition)
                 .add("team", team)
                 .add("tags", tags)
+                .add("notes", notes)
                 .add("interview time", startTime)
                 .add("duration", duration)
-                .add("notes", notes)
                 .toString();
     }
 

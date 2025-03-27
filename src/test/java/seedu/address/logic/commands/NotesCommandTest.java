@@ -30,7 +30,8 @@ public class NotesCommandTest {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new Person(firstPerson.getName(), firstPerson.getPhone(), firstPerson.getEmail(),
                 firstPerson.getAddress(), firstPerson.getJobPosition(), firstPerson.getTeam(),
-                firstPerson.getTags(), new Notes("Test notes"));
+                firstPerson.getTags(), new Notes("Test notes"), firstPerson.getStartTime(),
+                firstPerson.getDuration());
 
         NotesCommand notesCommand = new NotesCommand(INDEX_FIRST_PERSON, new Notes("Test notes"));
 

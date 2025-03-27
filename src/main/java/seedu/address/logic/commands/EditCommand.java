@@ -24,12 +24,14 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Duration;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.StartTime;
 import seedu.address.model.person.Team;
 import seedu.address.model.tag.Tag;
 
@@ -114,9 +116,11 @@ public class EditCommand extends Command {
         Team updatedTeam = editPersonDescriptor.getTeam().orElse(personToEdit.getTeam());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Notes notes = personToEdit.getNotes();
+        StartTime startTime = personToEdit.getStartTime();
+        Duration duration = personToEdit.getDuration();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedJobPosition,
-                updatedTeam, updatedTags, notes);
+                updatedTeam, updatedTags, notes, startTime, duration);
     }
 
     @Override
@@ -171,6 +175,8 @@ public class EditCommand extends Command {
         private Team team;
         private Set<Tag> tags;
         private Notes notes;
+        private StartTime startTime;
+        private Duration duration;
 
         public EditPersonDescriptor() {}
 
@@ -187,10 +193,19 @@ public class EditCommand extends Command {
             setTeam(toCopy.team);
             setTags(toCopy.tags);
             setNotes(toCopy.notes);
+            setStartTime(toCopy.startTime);
+            setDuration(toCopy.duration);
         }
 
         private void setNotes(Notes notes) {
             this.notes = notes;
+        }
+
+        private void setStartTime(StartTime startTime) {
+            this.startTime = startTime;
+        }
+        private void setDuration(Duration duration) {
+            this.duration = duration;
         }
 
         /**
@@ -297,6 +312,8 @@ public class EditCommand extends Command {
                     .add("team", team)
                     .add("tags", tags)
                     .add("notes", notes)
+                    .add("interview time", startTime)
+                    .add("duration", duration)
                     .toString();
         }
     }

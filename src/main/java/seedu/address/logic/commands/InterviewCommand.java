@@ -29,8 +29,8 @@ public class InterviewCommand extends Command {
             + "Start = %2$s, Duration = %3$d minutes";
 
     private final Index targetIndex;
-    private final StartTime startTime;
-    private final Duration duration;
+    private StartTime startTime;
+    private Duration duration;
 
     private Person targetPerson;
     private StartTime previousStartTime;
@@ -76,6 +76,7 @@ public class InterviewCommand extends Command {
                 personToUpdate.getJobPosition(),
                 personToUpdate.getTeam(),
                 personToUpdate.getTags(),
+                personToUpdate.getNotes(),
                 startTime,
                 duration
         );
@@ -104,4 +105,42 @@ public class InterviewCommand extends Command {
                 .add("duration", duration)
                 .toString();
     }
+
+    @Override
+    public CommandResult undo(Model model) throws CommandException {
+        requireNonNull(model);
+        Person personToRestore = targetPerson;
+
+        // Restore the old StartTime and Duration
+        Person updatedPerson = new Person(
+                personToRestore.getName(),
+                personToRestore.getPhone(),
+                personToRestore.getEmail(),
+                personToRestore.getAddress(),
+                personToRestore.getJobPosition(),
+                personToRestore.getTeam(),
+                personToRestore.getTags(),
+                personToRestore.getNotes(),
+                previousStartTime,
+                previousDuration
+        );
+
+        // Swap current and previous for redo
+        StartTime tempStart = previousStartTime;
+        Duration tempDuration = previousDuration;
+        previousStartTime = startTime;
+        previousDuration = duration;
+        startTime = tempStart;
+        duration = tempDuration;
+
+        model.setPerson(personToRestore, updatedPerson);
+        targetPerson = updatedPerson;
+        lastCommand = this;
+
+        return new CommandResult(String.format(InterviewCommand.MESSAGE_SET_INTERVIEW_SUCCESS,
+                targetIndex.getOneBased(),
+                startTime != null ? startTime.value : "None",
+                duration != null ? duration.getDurationInMinutes() : 0));
+    }
+
 }

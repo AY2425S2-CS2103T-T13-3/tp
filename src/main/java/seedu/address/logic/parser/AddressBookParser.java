@@ -80,16 +80,14 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
-<<<<<<< HEAD
         case InterviewCommand.COMMAND_WORD:
             return new InterviewCommandParser().parse(arguments);
-=======
+
         case NotesCommand.COMMAND_WORD:
             return new NotesCommandParser().parse(arguments);
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommandParser().parse(arguments);
->>>>>>> upstream/master
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

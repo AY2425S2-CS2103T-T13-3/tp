@@ -64,7 +64,9 @@ public class NotesCommand extends Command {
                 personToAddNotesTo.getJobPosition(),
                 personToAddNotesTo.getTeam(),
                 personToAddNotesTo.getTags(),
-                notes
+                notes,
+                personToAddNotesTo.getStartTime(),
+                personToAddNotesTo.getDuration()
         );
 
         model.setPerson(personToAddNotesTo, updatedPerson);
@@ -85,7 +87,9 @@ public class NotesCommand extends Command {
                 personToRemoveNotesFrom.getJobPosition(),
                 personToRemoveNotesFrom.getTeam(),
                 personToRemoveNotesFrom.getTags(),
-                lastNotes
+                lastNotes,
+                personToRemoveNotesFrom.getStartTime(),
+                personToRemoveNotesFrom.getDuration()
         );
         Notes temptNotes = lastNotes;
         lastNotes = notes;

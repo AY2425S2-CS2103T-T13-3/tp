@@ -34,7 +34,7 @@ public class InterviewCommandTest {
 
         Person editedPerson = new Person(firstPerson.getName(), firstPerson.getPhone(), firstPerson.getEmail(),
                 firstPerson.getAddress(), firstPerson.getJobPosition(), firstPerson.getTeam(),
-                firstPerson.getTags(), startTime, duration);
+                firstPerson.getTags(), firstPerson.getNotes(), startTime, duration);
 
         InterviewCommand command = new InterviewCommand(INDEX_FIRST_PERSON, startTime, duration);
 
