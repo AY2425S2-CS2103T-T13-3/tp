@@ -11,12 +11,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Duration;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.StartTime;
 import seedu.address.model.person.Team;
 import seedu.address.model.tag.Tag;
 
@@ -35,6 +37,8 @@ class JsonAdaptedPerson {
     private final String team;
     private final String notes;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String startTime;
+    private final String duration;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -43,8 +47,9 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("jobPosition") String jobPosition, @JsonProperty("team") String team,
-                             @JsonProperty("notes") String notes,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("notes") String notes, @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("startTime") String startTime, @JsonProperty("duration") String duration) {
+
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -55,6 +60,8 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     /**
@@ -71,6 +78,8 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        startTime = source.getStartTime().value;
+        duration = source.getDuration().value;
     }
 
     /**
@@ -134,11 +143,16 @@ class JsonAdaptedPerson {
         }
         final Team modelTeam = new Team(team);
 
-        final Notes modelNotes = new Notes(notes != null ? notes : "");
+        final StartTime modelStartTime = new StartTime(startTime != null ? startTime : "");
+
+        final Duration modelDuration = new Duration(duration != null ? duration : "");
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
+
+        final Notes modelNotes = new Notes(notes != null ? notes : "");
+
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelJobPosition,
-                modelTeam, modelTags, modelNotes);
+                modelTeam, modelTags, modelNotes, modelStartTime, modelDuration);
     }
 
 }
