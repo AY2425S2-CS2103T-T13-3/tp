@@ -18,5 +18,6 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> JobPosition
 Person *--> Notes
 @enduml
