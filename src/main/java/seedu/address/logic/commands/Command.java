@@ -8,6 +8,8 @@ import seedu.address.model.Model;
  */
 public abstract class Command {
 
+    protected static Command lastCommand = null;
+
     /**
      * Executes the command and returns the result message.
      *
@@ -16,5 +18,7 @@ public abstract class Command {
      * @throws CommandException If an error occurs during command execution.
      */
     public abstract CommandResult execute(Model model) throws CommandException;
+
+    public abstract CommandResult undo(Model model) throws CommandException;
 
 }

@@ -27,8 +27,18 @@ public class DeleteCommand extends Command {
 
     private final Index targetIndex;
 
+    private Person deletedPerson = null;
+
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+    }
+
+    /**
+     * Creates a DeleteCommand with a person.
+     */
+    public DeleteCommand(Person person) {
+        this.targetIndex = Index.fromZeroBased(0);
+        this.deletedPerson = person;
     }
 
     @Override
@@ -42,7 +52,17 @@ public class DeleteCommand extends Command {
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
+        deletedPerson = personToDelete;
+        lastCommand = this;
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+    }
+
+    @Override
+    public CommandResult undo(Model model) throws CommandException {
+        requireNonNull(model);
+        model.addPerson(deletedPerson);
+        lastCommand = new AddCommand(deletedPerson);
+        return new CommandResult(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(deletedPerson)));
     }
 
     @Override

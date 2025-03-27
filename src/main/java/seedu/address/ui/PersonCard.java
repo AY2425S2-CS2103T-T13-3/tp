@@ -70,8 +70,11 @@ public class PersonCard extends UiPart<Region> {
                     Label tagLabel = new Label(tag.tagName);
                     tags.getChildren().add(tagLabel);
                 });
+
         startTime.setText(person.getStartTime().value);
         duration.setText(person.getDuration().value);
+        interviewerNotes.setText(person.getNotes().value);
+
     }
 
 }

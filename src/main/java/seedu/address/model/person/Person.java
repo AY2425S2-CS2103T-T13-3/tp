@@ -28,22 +28,27 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final StartTime startTime;
     private final Duration duration;
+    private final Notes notes;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, JobPosition jobPosition,
                   Team team, Set<Tag> tags) {
+
         this(name, phone, email, address, jobPosition, team, tags,
-                new StartTime(""), new Duration(""));
+                new Notes(""), new StartTime(""), new Duration(""));
+
     }
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, JobPosition jobPosition,
-                  Team team, Set<Tag> tags, StartTime startTime, Duration duration) {
-        requireAllNonNull(name, phone, email, address, jobPosition, team, tags, startTime, duration);
+                  Team team, Set<Tag> tags, Notes notes, StartTime startTime, Duration duration) {
+
+        requireAllNonNull(name, phone, email, address, jobPosition, team, tags, notes, startTime, duration);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -53,6 +58,7 @@ public class Person {
         this.tags.addAll(tags);
         this.startTime = startTime;
         this.duration = duration;
+        this.notes = notes;
     }
 
     public Name getName() {
@@ -87,6 +93,10 @@ public class Person {
         return duration;
     }
 
+    public Notes getNotes() {
+        return notes;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -107,7 +117,6 @@ public class Person {
         return otherPerson != null
                 && otherPerson.getEmail().equals(getEmail());
     }
-
 
     /**
      * Returns true if both candidates have the same identity and data fields.
@@ -133,13 +142,14 @@ public class Person {
                 && team.equals(otherPerson.team)
                 && tags.equals(otherPerson.tags)
                 && startTime.equals(otherPerson.startTime)
-                && duration.equals(otherPerson.duration);
+                && duration.equals(otherPerson.duration)
+                && notes.equals(otherPerson.notes);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, jobPosition, team, tags, startTime, duration);
+        return Objects.hash(name, phone, email, address, jobPosition, team, tags, notes, startTime, duration);
     }
 
     @Override
@@ -154,6 +164,7 @@ public class Person {
                 .add("tags", tags)
                 .add("interview time", startTime)
                 .add("duration", duration)
+                .add("notes", notes)
                 .toString();
     }
 
