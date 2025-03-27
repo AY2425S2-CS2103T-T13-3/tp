@@ -36,6 +36,8 @@
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="jobPosition" styleClass="cell_small_label" text="\$jobPosition" />
       <Label fx:id="team" styleClass="cell_small_label" text="\$team" />
+      <Label fx:id="startTime" styleClass="cell_small_label" text="\$startTime" />
+      <Label fx:id="duration" styleClass="cell_small_label" text="\$duration" />
     </VBox>
 
     <VBox alignment="TOP_LEFT" minHeight="140" GridPane.columnIndex="1" styleClass="notes-section">
