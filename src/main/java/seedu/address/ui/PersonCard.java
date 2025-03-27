@@ -46,6 +46,10 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label interviewerNotes;
+    @FXML
+    private Label startTime;
+    @FXML
+    private Label duration;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -66,15 +70,8 @@ public class PersonCard extends UiPart<Region> {
                     Label tagLabel = new Label(tag.tagName);
                     tags.getChildren().add(tagLabel);
                 });
-
-        interviewerNotes.setText("");
+        startTime.setText(person.getStartTime().value);
+        duration.setText(person.getDuration().value);
     }
 
-    /**
-     * Updates the interviewer notes display.
-     * This method would be called when notes are updated via CLI commands.
-     */
-    public void updateNotes(String notes) {
-        interviewerNotes.setText(notes);
-    }
 }

@@ -26,13 +26,24 @@ public class Person {
     private final JobPosition jobPosition;
     private final Team team;
     private final Set<Tag> tags = new HashSet<>();
+    private final StartTime startTime;
+    private final Duration duration;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, JobPosition jobPosition,
                   Team team, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, jobPosition, team, tags);
+        this(name, phone, email, address, jobPosition, team, tags,
+                new StartTime(""), new Duration(""));
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, JobPosition jobPosition,
+                  Team team, Set<Tag> tags, StartTime startTime, Duration duration) {
+        requireAllNonNull(name, phone, email, address, jobPosition, team, tags, startTime, duration);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -40,6 +51,8 @@ public class Person {
         this.jobPosition = jobPosition;
         this.team = team;
         this.tags.addAll(tags);
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public Name getName() {
@@ -64,6 +77,14 @@ public class Person {
 
     public Team getTeam() {
         return team;
+    }
+
+    public StartTime getStartTime() {
+        return startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
     }
 
     /**
@@ -110,13 +131,15 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && jobPosition.equals(otherPerson.jobPosition)
                 && team.equals(otherPerson.team)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && startTime.equals(otherPerson.startTime)
+                && duration.equals(otherPerson.duration);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, jobPosition, team, tags);
+        return Objects.hash(name, phone, email, address, jobPosition, team, tags, startTime, duration);
     }
 
     @Override
@@ -129,6 +152,8 @@ public class Person {
                 .add("jobPosition", jobPosition)
                 .add("team", team)
                 .add("tags", tags)
+                .add("interview time", startTime)
+                .add("duration", duration)
                 .toString();
     }
 
