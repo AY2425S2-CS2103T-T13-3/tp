@@ -4,9 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -22,6 +24,8 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+
+    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -143,6 +147,12 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredPersons.equals(otherModelManager.filteredPersons);
+    }
+
+    @Override
+    public void sortFilteredPersonList(Comparator<Person> comparator) {
+        requireNonNull(comparator);
+        FXCollections.sort(internalList, comparator); // Sort the source list!
     }
 
 }

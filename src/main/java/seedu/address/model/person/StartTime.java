@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
 /**
  * Represents the start time of an interview in the format "yy-MM-dd HH-mm".
  */
-public class StartTime {
+public class StartTime implements Comparable<StartTime> {
 
     public static final String MESSAGE_CONSTRAINTS = "Start time must follow the \"yy-MM-dd HH:mm\" format.\n"
             + "Example: \"23-04-01 10-15\" => 2023-04-01 at 10:15 AM";
@@ -85,4 +85,19 @@ public class StartTime {
     public LocalDateTime getParsedStartTime() {
         return this.parsedStartTime;
     }
+
+    @Override
+    public int compareTo(StartTime other) {
+        if (this.parsedStartTime == null && other.parsedStartTime == null) {
+            return 0;
+        }
+        if (this.parsedStartTime == null) {
+            return 1; // treat nulls as later
+        }
+        if (other.parsedStartTime == null) {
+            return -1;
+        }
+        return this.parsedStartTime.compareTo(other.parsedStartTime);
+    }
+
 }
