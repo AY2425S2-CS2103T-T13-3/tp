@@ -2,11 +2,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Comparator;
-
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
 
 /**
  * Sorts all candidates in RecruitIntel by their start time in ascending order.
@@ -25,8 +22,8 @@ public class SortCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
-        // Sorts the internal list (a modifiable observable list) by comparator
-        model.sortFilteredPersonList(Comparator.comparing(Person::getStartTime));
+        // Use the natural ordering defined by StartTime's compareTo method
+        model.sortFilteredPersonList((p1, p2) -> p1.getStartTime().compareTo(p2.getStartTime()));
 
         return new CommandResult(MESSAGE_SORT_SUCCESS);
     }

@@ -152,7 +152,7 @@ public class ModelManager implements Model {
     @Override
     public void sortFilteredPersonList(Comparator<Person> comparator) {
         requireNonNull(comparator);
-        FXCollections.sort(internalList, comparator); // Sort the source list!
+        addressBook.sortPersons(comparator);
     }
 
 }
