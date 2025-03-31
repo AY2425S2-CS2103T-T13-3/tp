@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Candidate's job position in RecruitIntel.
@@ -10,13 +9,19 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class JobPosition {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Job positions can contain letters, numbers, spaces, and special characters like /, -, &";
+            "Job position should:\n"
+                    + "- Start with a letter or number\n"
+                    + "- Can contain letters, numbers, spaces\n"
+                    + "- Can contain common special characters: . , ( ) / - & + @\n"
+                    + "- Cannot be blank";
 
     /*
-     * Job position can contain alphanumeric characters, spaces, and common special characters.
-     * It must not be blank and must not start with whitespace.
+     * Job position validation rules:
+     * 1. Must start with alphanumeric character
+     * 2. Can contain alphanumeric characters, spaces, and common special characters
+     * 3. Must not be blank
      */
-    public static final String VALIDATION_REGEX = "^[\\p{Alnum}][\\p{Alnum} /\\-&]*$";
+    public static final String VALIDATION_REGEX = "^[\\p{Alnum}][\\p{Alnum} .,()@/\\-&+]*$";
 
     public final String value;
 
@@ -27,7 +32,10 @@ public class JobPosition {
      */
     public JobPosition(String jobPosition) {
         requireNonNull(jobPosition);
-        checkArgument(isValidJobPosition(jobPosition), MESSAGE_CONSTRAINTS);
+        String validationError = getValidationErrorMessage(jobPosition);
+        if (!validationError.equals(MESSAGE_CONSTRAINTS)) {
+            throw new IllegalArgumentException(validationError);
+        }
         value = jobPosition;
     }
 
@@ -35,7 +43,39 @@ public class JobPosition {
      * Returns true if a given string is a valid job position.
      */
     public static boolean isValidJobPosition(String test) {
-        return test.matches(VALIDATION_REGEX);
+        try {
+            new JobPosition(test);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns a specific error message identifying which characters are invalid in the job position.
+     */
+    private static String getValidationErrorMessage(String jobPosition) {
+        if (jobPosition.isEmpty()) {
+            return "Job position cannot be empty.\n\n" + MESSAGE_CONSTRAINTS;
+        }
+
+        if (!Character.isLetterOrDigit(jobPosition.charAt(0))) {
+            return "Job position must start with a letter or number, found: '"
+                    + jobPosition.charAt(0) + "'\n\n" + MESSAGE_CONSTRAINTS;
+        }
+
+        StringBuilder invalidChars = new StringBuilder();
+        for (char c : jobPosition.toCharArray()) {
+            if (!Character.isLetterOrDigit(c) && !". ,()@/-&+ ".contains(String.valueOf(c))) {
+                invalidChars.append("'").append(c).append("' ");
+            }
+        }
+
+        if (invalidChars.length() > 0) {
+            return "Found invalid character(s): " + invalidChars.toString().trim() + "\n\n" + MESSAGE_CONSTRAINTS;
+        }
+
+        return MESSAGE_CONSTRAINTS;
     }
 
     @Override
