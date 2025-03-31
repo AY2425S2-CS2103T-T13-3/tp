@@ -49,7 +49,8 @@ public class NotesCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         NotesCommand notesCommand = new NotesCommand(outOfBoundIndex, new Notes("Test notes"));
 
-        assertCommandFailure(notesCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(notesCommand, model,
+                String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, model.getFilteredPersonList().size()));
     }
 
     @Test
@@ -61,7 +62,8 @@ public class NotesCommandTest {
 
         NotesCommand notesCommand = new NotesCommand(outOfBoundIndex, new Notes("Test notes"));
 
-        assertCommandFailure(notesCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(notesCommand, model,
+                String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, model.getFilteredPersonList().size()));
     }
 
     @Test
