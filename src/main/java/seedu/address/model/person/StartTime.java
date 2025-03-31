@@ -7,13 +7,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Represents the start time of an interview in the format "yy-MM-dd HH-mm".
+ * Represents the start time of an interview in the format "yyyy-MM-dd HH:mm".
  */
 public class StartTime implements Comparable<StartTime> {
 
-    public static final String MESSAGE_CONSTRAINTS = "Start time must follow the \"yy-MM-dd HH:mm\" format.\n"
-            + "Example: \"23-04-01 10-15\" => 2023-04-01 at 10:15 AM";
-    public static final String MINUTE_CONSTRAINTS = "The minutes are ideally multiples of 5 minutes.\n";
+    public static final String MESSAGE_CONSTRAINTS = "Start time must follow the \"yyyy-MM-dd HH:mm\" format, "
+            + "and the minutes must be in multiples of 5 (e.g., 10, 15, 20).\n"
+            + "Example: \"2025-04-01 10:15\"";
+
     public static final String VALIDATION_REGEX = "^$|^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$";
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -35,30 +36,30 @@ public class StartTime implements Comparable<StartTime> {
 
         checkArgument(isValidStartTime(startTime), MESSAGE_CONSTRAINTS);
 
-        // Parse the start time
-        LocalDateTime temp = LocalDateTime.parse(startTime, FORMATTER);
-
-        checkArgument(isMinuteMultipleOfFive(temp), MINUTE_CONSTRAINTS);
-
         this.value = startTime;
-        this.parsedStartTime = temp;
+        this.parsedStartTime = LocalDateTime.parse(startTime, FORMATTER);
     }
+
 
     /**
      * Returns true if {@code test} is a valid StartTime string or null.
      */
     public static boolean isValidStartTime(String test) {
         if (test == null || test.isBlank()) {
-            return true; // Accept null or blank as "unset"
+            return true;
         }
 
         try {
+            if (!test.matches(VALIDATION_REGEX)) {
+                return false;
+            }
             LocalDateTime parsed = LocalDateTime.parse(test, FORMATTER);
-            return test.matches(VALIDATION_REGEX) && isMinuteMultipleOfFive(parsed);
+            return isMinuteMultipleOfFive(parsed);
         } catch (DateTimeParseException e) {
             return false;
         }
     }
+
 
 
     public static boolean isMinuteMultipleOfFive(LocalDateTime dateTime) {
