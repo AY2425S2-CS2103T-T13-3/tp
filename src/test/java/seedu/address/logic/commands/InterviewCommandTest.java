@@ -50,22 +50,25 @@ public class InterviewCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        InterviewCommand command = new InterviewCommand(outOfBoundIndex,
-                new StartTime("2025-04-01 10:00"), new Duration("30"));
+        InterviewCommand interviewCommand = new InterviewCommand(outOfBoundIndex,
+                new StartTime("2025-04-01 14:00"), new Duration("30"));
 
-        assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(interviewCommand, model,
+                String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, model.getFilteredPersonList().size()));
     }
 
     @Test
     public void execute_invalidPersonIndexFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        InterviewCommand command = new InterviewCommand(outOfBoundIndex,
-                new StartTime("2025-04-01 10:00"), new Duration("30"));
+        InterviewCommand interviewCommand = new InterviewCommand(outOfBoundIndex,
+                new StartTime("2025-04-01 14:00"), new Duration("30"));
 
-        assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(interviewCommand, model,
+                String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, model.getFilteredPersonList().size()));
     }
 
     @Test

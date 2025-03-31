@@ -42,7 +42,9 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "python";
 
     public static final String MESSAGE_SUCCESS = "New candidate added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This candidate already exists in RecruitIntel";
+    public static final String MESSAGE_DUPLICATE_PERSON = "Cannot add duplicate candidate: "
+            + "Email address '%1$s' is already in use.\n"
+            + "Each candidate must have a unique email address.";
 
     private final Person toAdd;
 
@@ -59,7 +61,7 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_PERSON, toAdd.getEmail().toString()));
         }
 
         model.addPerson(toAdd);
