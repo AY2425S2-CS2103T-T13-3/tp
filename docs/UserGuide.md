@@ -5,7 +5,9 @@
 ---
 
 # NUSMeet User Guide
-**NUSMeet** is a **Command Line Interface (CLI)** application designed for **NUS students** to **efficiently manage and organize** their contacts. It focuses on helping users **find coursemates** for study discussions, with **tagging** and **filtering** features tailored to student life.
+**NUSMeet** is a **Command Line Interface (CLI)** application designed for **NUS students** to **create, manage, and organize** their contacts. It focuses on helping users **connect with coursemates** for study discussions, with **tagging** and **filtering** features tailored to student life.
+
+**Who is this for?** NUSMeet is ideal for NUS students who want to build and maintain their academic network. Whether you're just starting university with no contacts or already have an established network, NUSMeet helps you keep track of classmates, project teammates, and study partners.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -125,8 +127,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/COURSE]…​ [f
 * Edits the friend at the specified `INDEX`. The index refers to the index number shown in the displayed friend list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the friend will be removed i.e adding of tags is not cumulative.
-* You can remove all the friend’s tags by typing `t/` without
+* When editing tags, specify all desired tags as this will replace any previous tags.
+* You can remove all the friend's tags by typing `t/` without
     specifying any tags after it.
 
 Examples:
