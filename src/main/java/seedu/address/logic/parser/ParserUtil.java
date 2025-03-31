@@ -107,10 +107,11 @@ public class ParserUtil {
     public static JobPosition parseJobPosition(String jobPosition) throws ParseException {
         requireNonNull(jobPosition);
         String trimmedJobPosition = jobPosition.trim();
-        if (!JobPosition.isValidJobPosition(trimmedJobPosition)) {
-            throw new ParseException(JobPosition.MESSAGE_CONSTRAINTS);
+        try {
+            return new JobPosition(trimmedJobPosition);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
         }
-        return new JobPosition(trimmedJobPosition);
     }
 
     /**
@@ -122,10 +123,11 @@ public class ParserUtil {
     public static Team parseTeam(String team) throws ParseException {
         requireNonNull(team);
         String trimmedTeam = team.trim();
-        if (!Team.isValidTeam(trimmedTeam)) {
-            throw new ParseException(Team.MESSAGE_CONSTRAINTS);
+        try {
+            return new Team(trimmedTeam);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
         }
-        return new Team(trimmedTeam);
     }
 
     /**
