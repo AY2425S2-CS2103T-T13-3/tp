@@ -9,11 +9,11 @@ import static java.util.Objects.requireNonNull;
 public class JobPosition {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Job position should:\n" +
-                    "- Start with a letter or number\n" +
-                    "- Can contain letters, numbers, spaces\n" +
-                    "- Can contain common special characters: . , ( ) / - & + @\n" +
-                    "- Cannot be blank";
+            "Job position should:\n"
+                    + "- Start with a letter or number\n"
+                    + "- Can contain letters, numbers, spaces\n"
+                    + "- Can contain common special characters: . , ( ) / - & + @\n"
+                    + "- Cannot be blank";
 
     /*
      * Job position validation rules:

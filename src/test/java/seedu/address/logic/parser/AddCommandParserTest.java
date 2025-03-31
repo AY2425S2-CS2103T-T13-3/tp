@@ -188,12 +188,12 @@ public class AddCommandParserTest {
         // invalid job position
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                         + INVALID_JOB_POSITION_DESC + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                JobPosition.MESSAGE_CONSTRAINTS);
+                "Job position must start with a letter or number, found: '@'\n\n" + JobPosition.MESSAGE_CONSTRAINTS);
 
         // invalid team
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                         + JOB_POSITION_DESC_BOB + INVALID_TEAM_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                Team.MESSAGE_CONSTRAINTS);
+                "Team name must start with a letter or number, found: '@'\n\n" + Team.MESSAGE_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB

@@ -92,8 +92,11 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS); // invalid address
         assertParseFailure(parser, "1" + INVALID_JOB_POSITION_DESC,
-                JobPosition.MESSAGE_CONSTRAINTS); // invalid job position
-        assertParseFailure(parser, "1" + INVALID_TEAM_DESC, Team.MESSAGE_CONSTRAINTS); // invalid team
+                "Job position must start with a letter or number, found: '@'\n\n"
+                        + JobPosition.MESSAGE_CONSTRAINTS); // invalid job position
+        assertParseFailure(parser, "1" + INVALID_TEAM_DESC,
+                "Team name must start with a letter or number, found: '@'\n\n"
+                        + Team.MESSAGE_CONSTRAINTS); // invalid team
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email

@@ -9,11 +9,11 @@ import static java.util.Objects.requireNonNull;
 public class Team {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Team name should:\n" +
-                    "- Start with a letter or number\n" +
-                    "- Can contain letters, numbers, spaces\n" +
-                    "- Can contain common special characters: . , ( ) / - & + @\n" +
-                    "- Cannot be blank";
+            "Team name should:\n"
+                    + "- Start with a letter or number\n"
+                    + "- Can contain letters, numbers, spaces\n"
+                    + "- Can contain common special characters: . , ( ) / - & + @\n"
+                    + "- Cannot be blank";
 
     /*
      * Team name validation rules:
