@@ -32,6 +32,18 @@ RecruitIntel is a **desktop app for managing candidate information, optimized fo
 
    * `delete 3` : Deletes the 3rd candidate in the current list.
 
+   * `find John` : Finds candidates whose names contain the word `John`.
+
+   * `classify t/python tm/Design j/Software Engineer` : Lists candidates with tag `python`, in the `Design` team, or applying for `Software Engineer`.
+
+   * `note 1 Strong backend experience, but lacks iOS exposure.` : Adds a note to the 1st candidate in the list.
+
+   * `interview 1 2025-04-01 10:00 40` : Schedules a 40-minute interview for the 1st candidate starting at 10:00 AM on April 1, 2025.
+
+   * `sort` : Sorts the listed candidates by their scheduled interview time.
+
+   * `undo` : Reverts the most recent change and restores the previous state.
+
    * `clear` : Deletes all candidates.
 
    * `exit` : Exits the app.
@@ -57,6 +69,11 @@ RecruitIntel is a **desktop app for managing candidate information, optimized fo
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+* The `sort` command only sorts **currently displayed** candidates (i.e. those shown by the last command such as `classify`, `find`, etc.), not all candidates in RecruitIntel.
+
+* The `classify` command performs an **AND search** — only candidates matching **all** provided attributes (tag, team, job position) will be returned.
+    e.g. `classify t/python tm/Design` returns candidates who have the tag `python` **and** are in the `Design` team.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -110,6 +127,24 @@ Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` – Updates phone and email for the 1st candidate.
 * `edit 2 n/Alice Tan j/Machine Learning Engineer` – Updates name and job position for the 2nd candidate.
 
+### Classifying candidates by attributes: `classify`
+
+Classifies candidates who match any of the given attributes (tag, team, or job position).
+
+Format: `classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]`
+
+* The search is case-insensitive. e.g. `python` will match `Python`
+* The order of the attributes does not matter. e.g. `t/python tm/Design` is equivalent to `tm/Design t/python`
+* Partial matches are supported. e.g. `engi` can be matched to `Engineer`
+* Candidates matching **all** provided attributes will be returned (i.e. `AND` search).
+  e.g. `t/python tm/Design` will return candidates who both have the tag `python` **and** are in the `Design` team.
+
+Examples:
+* `classify t/python` returns candidates with the tag `Python`
+* `classify tm/Design j/Software Engineer` returns candidates in the `Design` team and with the job position `Software Engineer`
+* `classify t/python tm/Design j/Software Engineer` returns candidates matching all three attributes
+![result for 'classify t/python tm/ios development'](images/classifyTagAndRenameResult.png)
+
 ### Locating candidates by name: `find`
 
 Finds candidates whose names contain any of the given keywords.
@@ -119,7 +154,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Partial words can also be matched e.g. `Han` will match `Hans`
 * Candidates matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
@@ -127,6 +162,21 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+### Adding notes to a candidate: `note`
+
+Adds interviewer notes to the candidate identified by the index number in the currently displayed candidate list.
+
+Format: `note INDEX [NOTE_FOR_THE_INTERVIEWEE]`
+
+* The specified `INDEX` must be a positive integer and must refer to a valid candidate in the displayed list.
+* The note text can be up to 450 characters.
+* Adding a note will overwrite any existing note for that candidate.
+
+Examples:
+* `note 1 The interviewee really exceeded our expectations!` adds a note to the first candidate in the list
+* `note 3 Strong backend experience, but lacks iOS exposure.` adds a note to the third candidate
+
 
 ### Deleting a candidate : `delete`
 
@@ -141,6 +191,50 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd candidate in RecruitIntel.
 * `find Betsy` followed by `delete 1` deletes the 1st candidate in the results of the `find` command.
+
+### Scheduling an interview: `interview`
+
+Sets the interview time for the candidate identified by the index number in the currently displayed candidate list.
+
+Format: `interview INDEX [START_TIME] [DURATION]`
+
+* `INDEX` must be a positive integer and refer to a valid candidate in the displayed list.
+* `START_TIME` must follow the format `yyyy-MM-dd HH:mm`, using 24-hour time.
+* `DURATION` must be a positive integer that is a multiple of 5 (e.g. 5, 10, 15...).
+
+Examples:
+* `interview 1 2025-04-01 10:00 40` schedules a 40-minute interview starting at 10:00 AM on April 1, 2025 for the first candidate
+* `interview 2 2025-04-03 14:30 30` schedules a 30-minute interview for the second candidate on April 3, 2025 at 2:30 PM
+
+### Sorting candidates by interview time: `sort`
+
+Sorts the currently displayed candidates by their scheduled interview start times in ascending order.
+
+Format: `sort`
+
+* Only candidates in the **current list** are sorted.  
+  For example, if the last command was `classify`, only the classified candidates will be sorted.
+* Candidates **without a scheduled interview** will appear **after** those with a scheduled time.
+* This command helps recruiters quickly view the upcoming interview order based on time.
+
+Examples:
+* After running `classify t/python`, running `sort` will sort the Python-tagged candidates by interview time.
+* After running `find John`, running `sort` will sort all candidates named John by their interview time.
+
+### Undoing the last command: `undo`
+
+Reverts the address book to the state before the most recent command was executed.
+
+Format: `undo`
+
+* Restores the model to its **previous state**, effectively undoing the last modifying command.
+* Can be used to undo commands such as `add`, `delete`, `edit`, `note`, `interview`, `classify`, etc.
+* Does **not** undo non-modifying commands like `find`, `list`, or `sort`.
+
+Examples:
+* After mistakenly deleting a candidate with `delete 3`, running `undo` will bring the candidate back.
+* After setting an incorrect interview time with `interview 2 2025-04-01 12:00 30`, running `undo` will revert it.
+
 
 ### Clearing all entries : `clear`
 
@@ -192,9 +286,15 @@ _Details coming soon ..._
 Action | Format, Examples
 --------|------------------
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS j/JOB_POSITION_APPLIED tm/TEAM_APPLIED [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 j/Staff Engineer tm/AI & Machine Learning t/Python t/AI`
+**Classify** | `classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]`<br> e.g., `classify t/python tm/Design j/Software Engineer`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] j/JOB_POSITION_APPLIED tm/TEAM_APPLIED [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com j/Data Scientist`
+**Exit** | `exit`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
 **Help** | `help`
+**List** | `list`
+**Interview** | `interview INDEX [STARTTIME] [DURATION]`<br> e.g., `interview 1 2025-04-01 10:00 40`
+**Note** | `note INDEX [NOTE_FOR_THE_INTERVIEWEE]`<br> e.g., `note 1 The interviewee really exceeded our expectations!`
+**Sort** | `sort`
+**Undo** | `undo`
