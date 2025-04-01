@@ -16,7 +16,8 @@ public class SortCommand extends Command {
             + "in ascending order and displays them as a list.\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SORT_SUCCESS = "Sorted all candidates by Start Time.";
+    public static final String MESSAGE_SORT_SUCCESS = "Already sorted all candidates listed here by "
+            + "Interviews' Start Time.";
 
     @Override
     public CommandResult execute(Model model) {
