@@ -2,7 +2,7 @@
 
 **NUSMeet** is your go-to **Command Line Interface (CLI)** application for **keeping track** of your friends and schoolmates at NUS. No more scrambling to remember who’s taking the same module as you — just **_tag_**, **_filter_**, and **_find_** the right people to study with in seconds.
 
-Designed for NUS students (by NUS students!), NUSMeet is perfect for those with an already established network of contacts who want to meet others to discuss schoolwork.  NUSMeet makes **organizing your contacts effortless** so you can focus on what really matters — acing your studies with the right people by your side! 👫👫
+Designed for NUS students (by NUS students!), NUSMeet is perfect for those with an already established network of contacts who want to meet others to discuss schoolwork and and prefer the speed of typing 🧑‍💻 over clicking 🖱️.  NUSMeet makes **organizing your contacts effortless** so you can focus on what really matters — acing your studies with the right people by your side! 👫👫
 
 ---
 
