@@ -7,8 +7,10 @@ import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -94,15 +96,17 @@ public class AddressBookParserTest {
     @Test
     public void classifyCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("friend", "java", "python");
+        List<Predicate<Person>> predicates = new ArrayList<>();
+        predicates.add(new TagsContainsKeywordsPredicate(keywords));
         ClassifyCommand command = (ClassifyCommand) parser.parseCommand(
-                ClassifyCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new ClassifyCommand(new TagsContainsKeywordsPredicate(keywords)), command);
+                ClassifyCommand.COMMAND_WORD + " t/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new ClassifyCommand(predicates), command);
     }
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), ()
-            -> parser.parseCommand(""));
+                -> parser.parseCommand(""));
     }
 
     @Test

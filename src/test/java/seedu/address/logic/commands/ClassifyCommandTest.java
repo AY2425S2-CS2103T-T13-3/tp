@@ -10,14 +10,18 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
 /**
@@ -34,14 +38,19 @@ public class ClassifyCommandTest {
         TagsContainsKeywordsPredicate secondPredicate =
                 new TagsContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        ClassifyCommand classifyFirstCommand = new ClassifyCommand(firstPredicate);
-        ClassifyCommand classifySecondCommand = new ClassifyCommand(secondPredicate);
+        List<Predicate<Person>> firstPredicates = new ArrayList<>();
+        firstPredicates.add(firstPredicate);
+        List<Predicate<Person>> secondPredicates = new ArrayList<>();
+        secondPredicates.add(secondPredicate);
+
+        ClassifyCommand classifyFirstCommand = new ClassifyCommand(firstPredicates);
+        ClassifyCommand classifySecondCommand = new ClassifyCommand(secondPredicates);
 
         // same object -> returns true
         assertTrue(classifyFirstCommand.equals(classifyFirstCommand));
 
         // same values -> returns true
-        ClassifyCommand classifyFirstCommandCopy = new ClassifyCommand(firstPredicate);
+        ClassifyCommand classifyFirstCommandCopy = new ClassifyCommand(firstPredicates);
         assertTrue(classifyFirstCommand.equals(classifyFirstCommandCopy));
 
         // different types -> returns false
@@ -58,7 +67,9 @@ public class ClassifyCommandTest {
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         TagsContainsKeywordsPredicate predicate = preparePredicate(" ");
-        ClassifyCommand command = new ClassifyCommand(predicate);
+        List<Predicate<Person>> predicates = new ArrayList<>();
+        predicates.add(predicate);
+        ClassifyCommand command = new ClassifyCommand(predicates);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
@@ -68,7 +79,9 @@ public class ClassifyCommandTest {
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         TagsContainsKeywordsPredicate predicate = preparePredicate("friend frind");
-        ClassifyCommand command = new ClassifyCommand(predicate);
+        List<Predicate<Person>> predicates = new ArrayList<>();
+        predicates.add(predicate);
+        ClassifyCommand command = new ClassifyCommand(predicates);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(ALICE, BENSON, DANIEL), model.getFilteredPersonList());
@@ -77,8 +90,10 @@ public class ClassifyCommandTest {
     @Test
     public void toStringMethod() {
         TagsContainsKeywordsPredicate predicate = new TagsContainsKeywordsPredicate(Arrays.asList("keyword"));
-        ClassifyCommand classifyCommand = new ClassifyCommand(predicate);
-        String expected = ClassifyCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
+        List<Predicate<Person>> predicates = new ArrayList<>();
+        predicates.add(predicate);
+        ClassifyCommand classifyCommand = new ClassifyCommand(predicates);
+        String expected = ClassifyCommand.class.getCanonicalName() + "{predicates=" + predicates + "}";
         assertEquals(expected, classifyCommand.toString());
     }
 
