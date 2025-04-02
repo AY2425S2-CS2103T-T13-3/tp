@@ -33,21 +33,48 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_JOB_POSITION, PREFIX_TEAM, PREFIX_TAG);
+        ArgumentMultimap argMultimap = tokenizeArguments(args);
+        Index index = parseIndex(argMultimap);
+        validateNoDuplicatePrefixes(argMultimap);
 
-        Index index;
+        EditPersonDescriptor editPersonDescriptor = createEditPersonDescriptor(argMultimap);
+        validateAtLeastOneField(editPersonDescriptor);
 
+        return new EditCommand(index, editPersonDescriptor);
+    }
+
+    /**
+     * Tokenizes the arguments with all available prefixes.
+     */
+    private ArgumentMultimap tokenizeArguments(String args) {
+        return ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                PREFIX_JOB_POSITION, PREFIX_TEAM, PREFIX_TAG);
+    }
+
+    /**
+     * Parses the index from the argument multimap.
+     * @throws ParseException if the index is invalid
+     */
+    private Index parseIndex(ArgumentMultimap argMultimap) throws ParseException {
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            return ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
+    }
 
+    /**
+     * Validates that there are no duplicate prefixes.
+     */
+    private void validateNoDuplicatePrefixes(ArgumentMultimap argMultimap) throws ParseException {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                 PREFIX_JOB_POSITION, PREFIX_TEAM);
+    }
 
+    /**
+     * Creates an EditPersonDescriptor from the provided arguments.
+     */
+    private EditPersonDescriptor createEditPersonDescriptor(ArgumentMultimap argMultimap) throws ParseException {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
@@ -63,19 +90,24 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
         if (argMultimap.getValue(PREFIX_JOB_POSITION).isPresent()) {
-            editPersonDescriptor.setJobPosition(
-                    ParserUtil.parseJobPosition(argMultimap.getValue(PREFIX_JOB_POSITION).get()));
+            String jobPosition = argMultimap.getValue(PREFIX_JOB_POSITION).get();
+            editPersonDescriptor.setJobPosition(ParserUtil.parseJobPosition(jobPosition));
         }
         if (argMultimap.getValue(PREFIX_TEAM).isPresent()) {
             editPersonDescriptor.setTeam(ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
+        return editPersonDescriptor;
+    }
+
+    /**
+     * Validates that at least one field is edited.
+     */
+    private void validateAtLeastOneField(EditPersonDescriptor editPersonDescriptor) throws ParseException {
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
-
-        return new EditCommand(index, editPersonDescriptor);
     }
 
     /**
@@ -92,5 +124,4 @@ public class EditCommandParser implements Parser<EditCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
-
 }

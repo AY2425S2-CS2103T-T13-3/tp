@@ -43,6 +43,24 @@ public class NotesCommand extends Command {
         this.notes = notes;
     }
 
+    /**
+     * Creates a new person with updated notes while preserving all other fields.
+     */
+    private Person createPersonWithNotes(Person basePerson, Notes newNotes) {
+        return new Person(
+                basePerson.getName(),
+                basePerson.getPhone(),
+                basePerson.getEmail(),
+                basePerson.getAddress(),
+                basePerson.getJobPosition(),
+                basePerson.getTeam(),
+                basePerson.getTags(),
+                newNotes,
+                basePerson.getStartTime(),
+                basePerson.getDuration()
+        );
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -57,19 +75,7 @@ public class NotesCommand extends Command {
         targetPerson = personToAddNotesTo;
         lastNotes = personToAddNotesTo.getNotes();
 
-        Person updatedPerson = new Person(
-                personToAddNotesTo.getName(),
-                personToAddNotesTo.getPhone(),
-                personToAddNotesTo.getEmail(),
-                personToAddNotesTo.getAddress(),
-                personToAddNotesTo.getJobPosition(),
-                personToAddNotesTo.getTeam(),
-                personToAddNotesTo.getTags(),
-                notes,
-                personToAddNotesTo.getStartTime(),
-                personToAddNotesTo.getDuration()
-        );
-
+        Person updatedPerson = createPersonWithNotes(personToAddNotesTo, notes);
         model.setPerson(personToAddNotesTo, updatedPerson);
         targetPerson = updatedPerson;
         lastCommand = this;
@@ -80,21 +86,11 @@ public class NotesCommand extends Command {
     public CommandResult undo(Model model) throws CommandException {
         requireNonNull(model);
         Person personToRemoveNotesFrom = targetPerson;
-        Person updatedPerson = new Person(
-                personToRemoveNotesFrom.getName(),
-                personToRemoveNotesFrom.getPhone(),
-                personToRemoveNotesFrom.getEmail(),
-                personToRemoveNotesFrom.getAddress(),
-                personToRemoveNotesFrom.getJobPosition(),
-                personToRemoveNotesFrom.getTeam(),
-                personToRemoveNotesFrom.getTags(),
-                lastNotes,
-                personToRemoveNotesFrom.getStartTime(),
-                personToRemoveNotesFrom.getDuration()
-        );
-        Notes temptNotes = lastNotes;
+        Person updatedPerson = createPersonWithNotes(personToRemoveNotesFrom, lastNotes);
+
+        Notes tempNotes = lastNotes;
         lastNotes = notes;
-        notes = temptNotes;
+        notes = tempNotes;
 
         model.setPerson(personToRemoveNotesFrom, updatedPerson);
         targetPerson = updatedPerson;
