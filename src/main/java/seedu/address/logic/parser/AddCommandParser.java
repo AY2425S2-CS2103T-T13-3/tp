@@ -34,10 +34,25 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_JOB_POSITION, PREFIX_TEAM, PREFIX_TAG);
+        ArgumentMultimap argMultimap = tokenizeArguments(args);
+        validatePrefixes(argMultimap);
+        Person person = createPerson(argMultimap);
+        return new AddCommand(person);
+    }
 
+    /**
+     * Tokenizes the command arguments with the required prefixes.
+     */
+    private ArgumentMultimap tokenizeArguments(String args) {
+        return ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                PREFIX_JOB_POSITION, PREFIX_TEAM, PREFIX_TAG);
+    }
+
+    /**
+     * Validates that all required prefixes are present and no duplicates exist.
+     * @throws ParseException if the user input does not conform to the expected format
+     */
+    private void validatePrefixes(ArgumentMultimap argMultimap) throws ParseException {
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_JOB_POSITION, PREFIX_TEAM)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -46,6 +61,13 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                 PREFIX_JOB_POSITION, PREFIX_TEAM);
+    }
+
+    /**
+     * Creates a Person object from the given argument multimap.
+     * @throws ParseException if there are problems parsing the field values
+     */
+    private Person createPerson(ArgumentMultimap argMultimap) throws ParseException {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -54,9 +76,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Team team = ParserUtil.parseTeam(argMultimap.getValue(PREFIX_TEAM).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, jobPosition, team, tagList);
-
-        return new AddCommand(person);
+        return new Person(name, phone, email, address, jobPosition, team, tagList);
     }
 
     /**

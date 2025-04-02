@@ -23,6 +23,14 @@ public class Messages {
             "Notes cannot exceed 450 characters. Current length: %1$d characters.";
     public static final String MESSAGE_NO_COMMAND_TO_UNDO = "There is no command to undo.";
 
+    // Constants for person formatting
+    private static final String FORMAT_PHONE_PREFIX = "; Phone: ";
+    private static final String FORMAT_EMAIL_PREFIX = "; Email: ";
+    private static final String FORMAT_ADDRESS_PREFIX = "; Address: ";
+    private static final String FORMAT_JOB_POSITION_PREFIX = "; Job Position: ";
+    private static final String FORMAT_TEAM_PREFIX = "; Team: ";
+    private static final String FORMAT_TAGS_PREFIX = "; Tags: ";
+
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
@@ -41,19 +49,18 @@ public class Messages {
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
         builder.append(person.getName())
-                .append("; Phone: ")
+                .append(FORMAT_PHONE_PREFIX)
                 .append(person.getPhone())
-                .append("; Email: ")
+                .append(FORMAT_EMAIL_PREFIX)
                 .append(person.getEmail())
-                .append("; Address: ")
+                .append(FORMAT_ADDRESS_PREFIX)
                 .append(person.getAddress())
-                .append("; Job Position: ")
+                .append(FORMAT_JOB_POSITION_PREFIX)
                 .append(person.getJobPosition())
-                .append("; Team: ")
+                .append(FORMAT_TEAM_PREFIX)
                 .append(person.getTeam())
-                .append("; Tags: ");
+                .append(FORMAT_TAGS_PREFIX);
         person.getTags().forEach(builder::append);
         return builder.toString();
     }
-
 }
