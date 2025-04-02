@@ -59,7 +59,7 @@ public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
-    public void parse_allFieldsPresent_success() {
+    public void parseCommand_allFieldsPresent_returnsAddCommand() {
         Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
@@ -78,7 +78,7 @@ public class AddCommandParserTest {
     }
 
     @Test
-    public void parse_repeatedNonTagValue_failure() {
+    public void parseCommand_duplicateFields_throwsParseException() {
         String validExpectedPersonString = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + JOB_POSITION_DESC_BOB + TEAM_DESC_BOB + TAG_DESC_FRIEND;
 
@@ -114,7 +114,7 @@ public class AddCommandParserTest {
     }
 
     @Test
-    public void parse_optionalFieldsMissing_success() {
+    public void parseCommand_optionalFieldMissing_returnsAddCommand() {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         assertParseSuccess(parser,
@@ -124,47 +124,37 @@ public class AddCommandParserTest {
     }
 
     @Test
-    public void parse_compulsoryFieldMissing_failure() {
+    public void parseCommand_requiredFieldMissing_throwsParseException() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // missing name prefix
-        assertParseFailure(
-                parser,
+        assertParseFailure(parser,
                 VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
-                expectedMessage
-        );
+                expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(
-                parser,
+        assertParseFailure(parser,
                 NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
-                expectedMessage
-        );
+                expectedMessage);
 
         // missing email prefix
-        assertParseFailure(
-                parser,
+        assertParseFailure(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
-                expectedMessage
-        );
+                expectedMessage);
 
         // missing address prefix
-        assertParseFailure(
-                parser,
+        assertParseFailure(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB,
-                expectedMessage
-        );
+                expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(
-                parser,
+        assertParseFailure(parser,
                 VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB,
-                expectedMessage
-        );
+                expectedMessage);
     }
 
     @Test
-    public void parse_invalidValue_failure() {
+    public void parseCommand_invalidFieldValue_throwsParseException() {
         // invalid name
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                         + JOB_POSITION_DESC_BOB + TEAM_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
