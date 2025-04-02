@@ -70,7 +70,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveFileName = 'tp.jar'
+    archiveFileName = 'RecruitIntel.jar'
 }
 
 defaultTasks 'clean', 'test'
