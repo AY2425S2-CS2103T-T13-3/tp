@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -32,9 +33,9 @@ public class InterviewCommand extends Command {
     private StartTime startTime;
     private Duration duration;
 
-    private Person targetPerson;
-    private StartTime previousStartTime;
-    private Duration previousDuration;
+    private Person updatedPerson;
+    private Person personToUpdate;
+
 
     /**
      * @param targetIndex index of candidate to set interview for
@@ -61,15 +62,10 @@ public class InterviewCommand extends Command {
                     String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, lastShownList.size()));
         }
 
-        Person personToUpdate = lastShownList.get(targetIndex.getZeroBased());
-        targetPerson = personToUpdate;
-
-        // Save previous values for undo
-        previousStartTime = personToUpdate.getStartTime();
-        previousDuration = personToUpdate.getDuration();
+        personToUpdate = lastShownList.get(targetIndex.getZeroBased());
 
         // Construct updated person
-        Person updatedPerson = new Person(
+        updatedPerson = new Person(
                 personToUpdate.getName(),
                 personToUpdate.getPhone(),
                 personToUpdate.getEmail(),
@@ -83,7 +79,8 @@ public class InterviewCommand extends Command {
         );
 
         model.setPerson(personToUpdate, updatedPerson);
-        targetPerson = updatedPerson;
+
+        lastCommand = this;
 
         return new CommandResult(String.format(MESSAGE_SET_INTERVIEW_SUCCESS,
                 targetIndex.getOneBased(), startTime.value, duration.getDurationInMinutes()));
@@ -110,38 +107,16 @@ public class InterviewCommand extends Command {
     @Override
     public CommandResult undo(Model model) throws CommandException {
         requireNonNull(model);
-        Person personToRestore = targetPerson;
 
-        // Restore the old StartTime and Duration
-        Person updatedPerson = new Person(
-                personToRestore.getName(),
-                personToRestore.getPhone(),
-                personToRestore.getEmail(),
-                personToRestore.getAddress(),
-                personToRestore.getJobPosition(),
-                personToRestore.getTeam(),
-                personToRestore.getTags(),
-                personToRestore.getNotes(),
-                previousStartTime,
-                previousDuration
-        );
+        model.setPerson(updatedPerson, personToUpdate);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        // Swap current and previous for redo
-        StartTime tempStart = previousStartTime;
-        Duration tempDuration = previousDuration;
-        previousStartTime = startTime;
-        previousDuration = duration;
-        startTime = tempStart;
-        duration = tempDuration;
+        Person temp = updatedPerson;
+        updatedPerson = personToUpdate;
+        personToUpdate = temp;
 
-        model.setPerson(personToRestore, updatedPerson);
-        targetPerson = updatedPerson;
-        lastCommand = this;
-
-        return new CommandResult(String.format(InterviewCommand.MESSAGE_SET_INTERVIEW_SUCCESS,
-                targetIndex.getOneBased(),
-                startTime != null ? startTime.value : "None",
-                duration != null ? duration.getDurationInMinutes() : 0));
+        return new CommandResult(String.format(MESSAGE_SET_INTERVIEW_SUCCESS, targetIndex.getOneBased(),
+                updatedPerson.getStartTime(), updatedPerson.getDuration().getDurationInMinutes()));
     }
 
 }
