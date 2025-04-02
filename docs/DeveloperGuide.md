@@ -9,7 +9,9 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* Code and idea for Undo and Redo were 
+    inspired by the original AB3 Developer Guide.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -294,43 +296,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
-
-## Use Case: UC01 - Sort Candidates
-
-**System**: AddressBook (RecruitIntel)  
-**Actor**: HR Recruiter
-
-**MSS**
-1. HR Recruiter chooses to sort candidates.
-2. **System** requests the sorting criteria (e.g., name, experience, role, date added).
-3. HR Recruiter enters the sorting criteria and order (ascending or descending).
-4. **System** sorts the candidates based on the specified criteria.
-5. **System** displays the sorted list.  
-   Use case ends.
-
-**Extensions**
-
-- **3a.** **System** detects an invalid sorting criterion.
-    - **3a1.** **System** requests the recruiter to enter a valid sorting criterion.
-    - **3a2.** HR Recruiter enters a new valid criterion.
-    - Steps 3a1–3a2 are repeated until the input is valid.  
-      Use case resumes from step 4.
-
-- **3b.** There are no candidates in the system.
-    - **3b1.** **System** notifies the recruiter that sorting is not possible.  
-      Use case ends.
-
-- **\*a.** At any time, HR Recruiter chooses to cancel the sorting operation.
-    - **\*a1.** **System** requests confirmation for cancellation.
-    - **\*a2.** HR Recruiter confirms the cancellation.  
-      Use case ends.
+(For all use cases below, the **System** is the `RecruitIntel` and the **Actor** is the `user`, unless specified otherwise)
 
 
-## Use Case: UC02 - Add New Candidate
-
-**System**: AddressBook (RecruitIntel)  
-**Actor**: HR Recruiter
+## Use Case: UC01 - Add New Candidate
 
 **MSS**
 1. HR Recruiter adds a new candidate.
@@ -359,9 +328,115 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
       Use case ends.
 
+## Use Case: UC02 - List All Candidate
 
+**MSS**
+1. HR Recruiter chooses to list all candidates.
+2. **System** retrieves all candidates.
+3. **System** displays the list of candidates.  
+   Use case ends.
 
-  *{More to be added}*
+## Use Case: UC03 - Edit Candidate Information
+
+**MSS**
+1. HR Recruiter chooses to edit a candidate.
+2. **System** requests the candidate to edit.
+3. HR Recruiter enters the candidate to edit.
+4. **System** updates the student’s details and display a success message.
+   Use case ends.
+
+**Extension**
+- **3a.** **System** detects an invalid candidate.
+    - **3a1.** **System** requests the recruiter to enter a valid candidate.
+    - **3a2.** HR Recruiter enters a new valid candidate.
+    - Steps 3a1–3a2 are repeated until the input is valid.  
+      Use case resumes from step 4.
+
+## Use Case: UC04 - Classify Candidate
+**MSS**
+1. HR Recruiter chooses to classify some candidates based on tag.
+2. **System** requests the candidate to classify.
+3. **System** displays the candidate to classify.
+
+## Use Case: UC05 - Find Candidate
+**MSS**
+1. HR Recruiter chooses to find a candidate.
+2. **System** requests the candidate to find.
+3. HR Recruiter enters the keywords to find.
+4. **System** finds the candidate and displays the candidate.
+5. **System** displays the list of candidates.  
+   Use case ends.
+
+## Use Case: UC06 - Enter Note for Candidate
+**MSS**
+1. HR Recruiter chooses to enter a note for a candidate.
+2. **System** requests the candidate to enter a note.
+3. HR Recruiter enters the note for the candidate.
+4. **System** displays the note for the candidate.  
+   Use case ends.
+
+**Extension**
+- **3a.** **System** detects and invalid note.
+    - **3a1.** **System** requests the recruiter to enter a valid note.
+    - **3a2.** HR Recruiter enters a new valid note.
+    - Steps 3a1–3a2 are repeated until the input is valid.  
+      Use case resumes from step 4.
+Use case ends.
+
+## Use Case: UC07 - Delete Candidate
+
+**MSS**
+1. HR Recruiter chooses to delete a candidate.
+2. **System** requests the candidate to delete.
+3. HR Recruiter enters the candidate to delete.
+
+Use case ends.
+
+**Extensions**
+- **3a.** **System** detects an invalid candidate.
+    - **3a1.** **System** requests the recruiter to enter a valid candidate.
+    - **3a2.** HR Recruiter enters a new valid candidate.
+    - Steps 3a1–3a2 are repeated until the input is valid.  
+      Use case resumes from step 4.
+
+Use case ends.
+
+## Use Case: UC08 - Add Interview Time Information for Candidate
+**MSS**
+1. HR Recruiter chooses to add interview time information for a candidate.
+2. **System** requests the candidate to add interview time information.
+3. HR Recruiter enters the interview time information for the candidate.
+4. **System** displays the interview time information for the candidate.  
+   Use case ends.
+
+**Extensions**
+- **3a.** **System** detects an invalid interview time information.
+    - **3a1.** **System** requests the recruiter to enter a valid interview time information.
+    - **3a2.** HR Recruiter enters a new valid interview time information.
+    - Steps 3a1–3a2 are repeated until the input is valid.  
+      Use case resumes from step 4.
+
+Use case ends.
+
+## Use Case: UC09 - Sort Candidates
+
+**MSS**
+1. HR Recruiter chooses to sort candidates.
+2. **System** sorts the candidates based on the interview time.
+3. **System** displays the sorted list.  
+   Use case ends.
+
+## Use Case: UC10 - Undo Last Action
+**MSS**
+1. HR Recruiter chooses to undo the last action.
+2. **System** undoes the last action.  
+   Use case ends.
+
+## Use Case: UC11 - Clear All Candidates
+**MSS**
+1. HR Recruiter chooses to clear all candidates.
+2. **System** clears all candidates.  
+   Use case ends.
 
 ### Non-Functional Requirements
 
@@ -376,21 +451,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 * **AB3**: The codebase provided as a starting point for this project. RecruitIntel extends and modifies AB3.
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-* **API (Application Programming Interface)**: Set of rules and specifications that software programs can follow to communicate with each other.
 * **CLI (Command Line Interface)**: A user interface navigated by typing commands into a terminal or console window.
 * **GUI (Graphical User Interface)**: An interface allowing users to interact with electronic devices through graphical icons and visual indicators.
 * **JSON (JavaScript Object Notation)**: A lightweight data-interchange format, easy for humans to read and write, and easy for machines to parse and generate.
 * **Mainstream OS**: Operating systems that are widely used and supported, such as Windows, macOS, Linux, and UNIX.
-* **Model-View-Controller (MVC)**: Architectural pattern isolating business logic from user interface considerations.
-* **ObservableList**: A list that allows listeners to track changes when they occur.
 * **Parser**: A component that interprets text data within a file according to predefined rules or specifications.
 * **PlantUML**: A tool for quickly writing and sharing visual representations of programs, algorithms, and systems.
 * **Sequence Diagram**: A type of UML diagram showing how objects operate with one another and in what order.
 * **State Pointer**: A reference point tracking the current state or position in a sequence of states.
 * **UML (Unified Modeling Language)**: A standardized modeling language consisting of an integrated set of diagrams.
-* **Version Control System**: A system that records changes to files over time, allowing specific versions to be recalled later.
 * **XML (eXtensible Markup Language)**: A markup language defining rules for encoding documents in a format that is both human-readable and machine-readable.
+* **Tag**: A keyword or term assigned to a piece of information, making it easier to search for and locate.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -399,27 +470,24 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 Given below are instructions to test the app manually.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
-
-</div>
-
 ### Launch and shutdown
 
 1. Initial launch
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+3. Exit the App
+
+Enter exit in the command box. This will exit the app.
 
 ### Deleting a person
 
@@ -427,21 +495,33 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
+   2. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
+   3. Test case: `delete 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Editing a person
+1. Editing a person in the person list
+- 1. Assumption: We assume the index here is valid if it is a positive integer
+Test case edit 1 g/female
+Expected: The gender of the first person in the list is changed to female
+Test case edit 0 g/female
+Expected: No person is edited, an error message will be displayed.
+Other incorrect edit command to try :
+edit 1 p/000
+edit 1 n/J@hn D*n
+Expected: Same as test case 3
+Other valid edit command to try :
+edit 1 n/Angelica Lee
+edit 1 p/96754328
+Expected: the field indicated by the prefix is edit to the information given.
 
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
+### Finding a person
+1. Test case: `find alice`
+   Expected: All persons with the name `alice` are shown in the list. Other persons are hidden.
+2. Test case: `find ab`
+   Expected: All persons with the name `ab` are shown in the list. Other persons are hidden.
