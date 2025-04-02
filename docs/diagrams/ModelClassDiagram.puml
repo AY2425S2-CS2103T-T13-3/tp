@@ -20,8 +20,10 @@ Class Name
 Class Phone
 Class JobPosition
 Class Notes
-Class Tag
 Class Team
+Class Tag
+Class StartTime
+Class Duration
 
 Class I #FFFFFF
 }
@@ -47,6 +49,8 @@ Person *--> Address
 Person *--> JobPosition
 Person *--> Notes
 Person *--> "*" Tag
+Person *--> StartTime
+Person *--> Duration
 Person *--> Team
 
 Person -[hidden]up--> I

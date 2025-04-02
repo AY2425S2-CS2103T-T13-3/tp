@@ -147,6 +147,21 @@ The `Storage` component,
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
+The following is an example JSON output for a person:
+```json
+{
+    "name" : "David Li",
+    "phone" : "91031282",
+    "email" : "lidavid@example.com",
+    "address" : "Blk 436 Serangoon Gardens Street 26, #16-43",
+    "jobPosition" : "Security Specialist",
+    "team" : "Apple Store",
+    "notes" : "Expert in iOS security protocols and penetration testing. Previously led security at a major tech firm. Identified critical vulnerabilities in App Store submission process. Strong security mindset. Published research on mobile app security. Excellent communicator when explaining complex security concepts.",
+    "tags" : [ "what", "shw" ],
+    "startTime" : "2025-01-01 13:45",
+    "duration" : "15"
+  }
+```
 ### Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
@@ -280,19 +295,20 @@ A highly efficient, CLI-driven contact management system that enables Apple’s 
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​   | I want to …​                                                                  | So that I can…​                                                                       |
-|----------|-----------|-------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| `* * *`  | new user  | see usage instructions                                                        | refer to instructions when I forget how to use the App or when I start using the app. |
-| `* * *`  | recruiter | add a candidate’s name, contact details, and role applied for                 | keep track of them easily.                                                            
+| Priority | As a …​   | I want to …​                                                  | So that I can…​                                                                       |
+|--------|-----------|---------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| `* * *` | new user  | see usage instructions                                        | refer to instructions when I forget how to use the App or when I start using the app. |
+| `* * *` | recruiter | add a candidate’s name, contact details, and role applied for | keep track of them easily.                                                            
 |
-| `* * *`  | recruiter | list all candidates in the system                                             | see at a glance who is currently in the database.                                     
+| `* * *` | recruiter | list all candidates in the system                             | see at a glance who is currently in the database.                                     
 |
-| `* * *`  | recruiter | remove outdated or irrelevant candidate records                               | maintain a clean list.                                                                |
-| `* * *`  | recruiter | find candidates by their names or skills                                      | quickly locate specific individuals.                                                  |
-| `* *`    | recruiter | hide private contact details of my candidates                                 | minimize chance of possible candidates' privacy leakage.                              |
-| `* *`    | recruiter | sort candidates by criteria (e.g., years of experience, matching skill level) | see the best matches first.                                                           |
-| `* *`    | recruiter | edit a candidate's details (e.g. phone, email)                                | correct mistakes and keep data accurate conveniently.                                 |
-*{More to be added}*
+| `* * *` | recruiter | remove outdated or irrelevant candidate records               | maintain a clean list.                                                                |
+| `* * *` | recruiter | find candidates by their names or skills                      | quickly locate specific individuals.                                                  |
+| `* * *` | recruiter | Record the candidate's interview performance                  | facilitate subsequent admission evaluation.                                           |
+| `* * *` | recruiter | Add candidates' interview time                                | schedule an interview.                                                                |
+| `* *`  | recruiter | sort candidates by criteria (e.g., interview time)            | see the best matches first.                                                           |
+| `* *`  | recruiter | edit a candidate's details (e.g. phone, email)                | correct mistakes and keep data accurate conveniently.                                 |
+| `*`    | recruiter | hide private contact details of my candidates                 | minimize chance of possible candidates' privacy leakage.                              |
 
 ### Use cases
 
