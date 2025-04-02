@@ -26,7 +26,7 @@ public class NotesCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_addNotes_success() {
+    public void executeNotesCommand_validIndex_addsNotesSuccessfully() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new Person(firstPerson.getName(), firstPerson.getPhone(), firstPerson.getEmail(),
                 firstPerson.getAddress(), firstPerson.getJobPosition(), firstPerson.getTeam(),
@@ -45,7 +45,7 @@ public class NotesCommandTest {
     }
 
     @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
+    public void executeNotesCommand_invalidIndexUnfiltered_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         NotesCommand notesCommand = new NotesCommand(outOfBoundIndex, new Notes("Test notes"));
 
@@ -54,7 +54,7 @@ public class NotesCommandTest {
     }
 
     @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
+    public void executeNotesCommand_invalidIndexFiltered_throwsCommandException() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
@@ -67,7 +67,7 @@ public class NotesCommandTest {
     }
 
     @Test
-    public void equals() {
+    public void equalsMethod_variousScenarios_returnsExpectedResults() {
         final Notes notes = new Notes("Test notes");
         final NotesCommand standardCommand = new NotesCommand(INDEX_FIRST_PERSON, notes);
 

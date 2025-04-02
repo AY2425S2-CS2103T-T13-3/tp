@@ -13,7 +13,7 @@
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" styleClass="candidate-card">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" percentWidth="65" />
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="54" />
       <ColumnConstraints hgrow="SOMETIMES" percentWidth="33" />
     </columnConstraints>
     <VBox alignment="CENTER_LEFT" minHeight="140" GridPane.columnIndex="0">

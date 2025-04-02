@@ -2,12 +2,15 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
+
 /**
  * Represents a Candidate's team in RecruitIntel.
  * Guarantees: immutable; is valid as declared in {@link #isValidTeam(String)}
  */
 public class Team {
-
     public static final String MESSAGE_CONSTRAINTS =
             "Team name should:\n"
                     + "- Start with a letter or number\n"
@@ -17,11 +20,19 @@ public class Team {
 
     /*
      * Team name validation rules:
-     * 1. Must start with alphanumeric character
-     * 2. Can contain alphanumeric characters, spaces, and common special characters
-     * 3. Must not be blank
+     * 1. Must start with alphanumeric character: ^[\\p{Alnum}]
+     * 2. Can contain:
+     *    - alphanumeric characters: \\p{Alnum}
+     *    - spaces and special chars: [ .,()@/\\-&+]
+     * 3. Can have any number of these characters after the first: *
      */
     public static final String VALIDATION_REGEX = "^[\\p{Alnum}][\\p{Alnum} .,()@/\\-&+]*$";
+
+    private static final Logger logger = LogsCenter.getLogger(Team.class);
+    private static final String MESSAGE_EMPTY = "Team name cannot be empty.\n\n";
+    private static final String MESSAGE_INVALID_START = "Team name must start with a letter or number, found: '%s'\n\n";
+    private static final String MESSAGE_INVALID_CHARS = "Found invalid character(s): %s\n\n";
+    private static final String ALLOWED_SPECIAL_CHARS = ". ,()@/-&+ ";
 
     public final String value;
 
@@ -34,6 +45,7 @@ public class Team {
         requireNonNull(team);
         String validationError = getValidationErrorMessage(team);
         if (!validationError.equals(MESSAGE_CONSTRAINTS)) {
+            logger.warning("Invalid team name attempted: " + team);
             throw new IllegalArgumentException(validationError);
         }
         value = team;
@@ -47,6 +59,7 @@ public class Team {
             new Team(test);
             return true;
         } catch (IllegalArgumentException e) {
+            logger.fine("Team name validation failed: " + test);
             return false;
         }
     }
@@ -56,26 +69,35 @@ public class Team {
      */
     private static String getValidationErrorMessage(String team) {
         if (team.isEmpty()) {
-            return "Team name cannot be empty.\n\n" + MESSAGE_CONSTRAINTS;
+            logger.fine("Empty team name detected");
+            return MESSAGE_EMPTY + MESSAGE_CONSTRAINTS;
         }
 
         if (!Character.isLetterOrDigit(team.charAt(0))) {
-            return "Team name must start with a letter or number, found: '"
-                    + team.charAt(0) + "'\n\n" + MESSAGE_CONSTRAINTS;
+            logger.fine("Invalid starting character in team name: " + team.charAt(0));
+            return String.format(MESSAGE_INVALID_START, team.charAt(0)) + MESSAGE_CONSTRAINTS;
         }
 
-        StringBuilder invalidChars = new StringBuilder();
-        for (char c : team.toCharArray()) {
-            if (!Character.isLetterOrDigit(c) && !". ,()@/-&+ ".contains(String.valueOf(c))) {
-                invalidChars.append("'").append(c).append("' ");
-            }
-        }
-
-        if (invalidChars.length() > 0) {
-            return "Found invalid character(s): " + invalidChars.toString().trim() + "\n\n" + MESSAGE_CONSTRAINTS;
+        String invalidChars = findInvalidCharacters(team);
+        if (!invalidChars.isEmpty()) {
+            logger.fine("Invalid characters found in team name: " + invalidChars);
+            return String.format(MESSAGE_INVALID_CHARS, invalidChars) + MESSAGE_CONSTRAINTS;
         }
 
         return MESSAGE_CONSTRAINTS;
+    }
+
+    /**
+     * Returns a string containing all invalid characters found in the team name.
+     */
+    private static String findInvalidCharacters(String team) {
+        StringBuilder invalidChars = new StringBuilder();
+        for (char c : team.toCharArray()) {
+            if (!Character.isLetterOrDigit(c) && !ALLOWED_SPECIAL_CHARS.contains(String.valueOf(c))) {
+                invalidChars.append("'").append(c).append("' ");
+            }
+        }
+        return invalidChars.toString().trim();
     }
 
     @Override

@@ -9,15 +9,20 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Notes {
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Notes cannot exceed 450 characters in length.";
-
     public static final int MAX_LENGTH = 450;
+    public static final String MESSAGE_CONSTRAINTS =
+            String.format("Notes cannot exceed %d characters in length.", MAX_LENGTH);
 
     /*
-     * Notes can be any string up to MAX_LENGTH characters
+     * Notes validation rules:
+     * 1. Can be any string (including empty)
+     * 2. Must not exceed MAX_LENGTH characters
+     * 3. Can contain any characters (multiline allowed)
+     *
+     * The regex below uses a non-greedy match (.*?) to match any character
+     * up to MAX_LENGTH times
      */
-    public static final String VALIDATION_REGEX = "^.{0," + MAX_LENGTH + "}$";
+    private static final String VALIDATION_REGEX = String.format("^.{0,%d}$", MAX_LENGTH);
 
     public final String value;
 

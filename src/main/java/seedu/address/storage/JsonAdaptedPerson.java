@@ -88,43 +88,92 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
+        final List<Tag> personTags = convertTags();
+
+        final Name modelName = validateAndCreateName();
+        final Phone modelPhone = validateAndCreatePhone();
+        final Email modelEmail = validateAndCreateEmail();
+        final Address modelAddress = validateAndCreateAddress();
+        final JobPosition modelJobPosition = validateAndCreateJobPosition();
+        final Team modelTeam = validateAndCreateTeam();
+
+        // Optional fields with default empty values
+        final StartTime modelStartTime = new StartTime(startTime != null ? startTime : "");
+        final Duration modelDuration = new Duration(duration != null ? duration : "");
+        final Notes modelNotes = new Notes(notes != null ? notes : "");
+        final Set<Tag> modelTags = new HashSet<>(personTags);
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelJobPosition,
+                modelTeam, modelTags, modelNotes, modelStartTime, modelDuration);
+    }
+
+    /**
+     * Converts the stored tags into a List of Tag objects.
+     */
+    private List<Tag> convertTags() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
         }
+        return personTags;
+    }
 
+    /**
+     * Validates and creates a Name object.
+     */
+    private Name validateAndCreateName() throws IllegalValueException {
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
         if (!Name.isValidName(name)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        final Name modelName = new Name(name);
+        return new Name(name);
+    }
 
+    /**
+     * Validates and creates a Phone object.
+     */
+    private Phone validateAndCreatePhone() throws IllegalValueException {
         if (phone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
         if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         }
-        final Phone modelPhone = new Phone(phone);
+        return new Phone(phone);
+    }
 
+    /**
+     * Validates and creates an Email object.
+     */
+    private Email validateAndCreateEmail() throws IllegalValueException {
         if (email == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
         }
         if (!Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
-        final Email modelEmail = new Email(email);
+        return new Email(email);
+    }
 
+    /**
+     * Validates and creates an Address object.
+     */
+    private Address validateAndCreateAddress() throws IllegalValueException {
         if (address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
         if (!Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
-        final Address modelAddress = new Address(address);
+        return new Address(address);
+    }
 
+    /**
+     * Validates and creates a JobPosition object.
+     */
+    private JobPosition validateAndCreateJobPosition() throws IllegalValueException {
         if (jobPosition == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     JobPosition.class.getSimpleName()));
@@ -132,8 +181,13 @@ class JsonAdaptedPerson {
         if (!JobPosition.isValidJobPosition(jobPosition)) {
             throw new IllegalValueException(JobPosition.MESSAGE_CONSTRAINTS);
         }
-        final JobPosition modelJobPosition = new JobPosition(jobPosition);
+        return new JobPosition(jobPosition);
+    }
 
+    /**
+     * Validates and creates a Team object.
+     */
+    private Team validateAndCreateTeam() throws IllegalValueException {
         if (team == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Team.class.getSimpleName()));
@@ -141,18 +195,6 @@ class JsonAdaptedPerson {
         if (!Team.isValidTeam(team)) {
             throw new IllegalValueException(Team.MESSAGE_CONSTRAINTS);
         }
-        final Team modelTeam = new Team(team);
-
-        final StartTime modelStartTime = new StartTime(startTime != null ? startTime : "");
-
-        final Duration modelDuration = new Duration(duration != null ? duration : "");
-
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-
-        final Notes modelNotes = new Notes(notes != null ? notes : "");
-
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelJobPosition,
-                modelTeam, modelTags, modelNotes, modelStartTime, modelDuration);
+        return new Team(team);
     }
-
 }

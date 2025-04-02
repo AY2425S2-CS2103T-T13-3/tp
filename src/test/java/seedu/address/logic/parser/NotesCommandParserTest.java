@@ -16,7 +16,7 @@ public class NotesCommandParserTest {
     private NotesCommandParser parser = new NotesCommandParser();
 
     @Test
-    public void parse_validArgs_returnsNotesCommand() {
+    public void parse_validNotesText_returnsNotesCommand() {
         // with notes
         assertParseSuccess(parser, "1 Test notes",
                 new NotesCommand(INDEX_FIRST_PERSON, new Notes("Test notes")));
@@ -27,15 +27,19 @@ public class NotesCommandParserTest {
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
-        // no index
+    public void parse_missingIndex_throwsParseException() {
         assertParseFailure(parser, "Test notes",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, NotesCommand.MESSAGE_USAGE));
+    }
 
-        // no notes
+    @Test
+    public void parse_missingNotes_throwsParseException() {
         assertParseFailure(parser, "1",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, NotesCommand.MESSAGE_USAGE));
+    }
 
+    @Test
+    public void parse_invalidIndex_throwsParseException() {
         // negative index
         assertParseFailure(parser, "-1 Test notes",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, NotesCommand.MESSAGE_USAGE));
@@ -50,7 +54,7 @@ public class NotesCommandParserTest {
     }
 
     @Test
-    public void parse_notesTooLong_throwsParseException() {
+    public void parse_notesExceedsMaxLength_throwsParseException() {
         String longNotes = "a".repeat(Notes.MAX_LENGTH + 1);
         assertParseFailure(parser, "1 " + longNotes,
                 String.format(MESSAGE_NOTES_CHARACTER_LIMIT_EXCEEDED, longNotes.length()));
