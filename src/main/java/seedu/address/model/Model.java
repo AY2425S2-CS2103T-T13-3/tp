@@ -88,4 +88,19 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     void sortFilteredPersonList(Comparator<Person> comparing);
+
+    /**
+     * Saves the current address book state in its history.
+     */
+    void commitAddressBook();
+
+    /**
+     * Restores the address book to its previous state.
+     */
+    void undoAddressBook() throws VersionedAddressBook.NoUndoableStateException;
+
+    /**
+     * Restores the address book to its previously undone state.
+     */
+    void redoAddressBook() throws VersionedAddressBook.NoRedoableStateException;
 }

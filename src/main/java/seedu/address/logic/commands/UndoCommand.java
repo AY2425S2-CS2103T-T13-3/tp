@@ -6,6 +6,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.VersionedAddressBook;
 
 /**
  * Undo the most recent command that modifies the data.
@@ -27,7 +28,14 @@ public class UndoCommand extends Command {
         if (lastCommand == null) {
             throw new CommandException(Messages.MESSAGE_NO_COMMAND_TO_UNDO);
         }
-        return lastCommand.undo(model);
+
+        try {
+            model.undoAddressBook();
+        } catch (VersionedAddressBook.NoUndoableStateException e) {
+            throw new CommandException(MESSAGE_UNDO_NOT_AVAILABLE);
+        }
+
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override

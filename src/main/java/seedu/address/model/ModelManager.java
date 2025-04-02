@@ -20,11 +20,10 @@ import seedu.address.model.person.Person;
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-
     private final AddressBook addressBook;
+    private final VersionedAddressBook versionedAddressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
-
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
 
     /**
@@ -36,6 +35,7 @@ public class ModelManager implements Model {
         logger.fine("Initializing with RecruitIntel: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.versionedAddressBook = new VersionedAddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
@@ -153,6 +153,21 @@ public class ModelManager implements Model {
     public void sortFilteredPersonList(Comparator<Person> comparator) {
         requireNonNull(comparator);
         addressBook.sortPersons(comparator);
+    }
+
+    @Override
+    public void commitAddressBook() {
+        versionedAddressBook.commit();
+    }
+
+    @Override
+    public void undoAddressBook() throws VersionedAddressBook.NoUndoableStateException {
+        this.setAddressBook(versionedAddressBook.undo());
+    }
+
+    @Override
+    public void redoAddressBook() throws VersionedAddressBook.NoRedoableStateException {
+        versionedAddressBook.redo();
     }
 
 }
