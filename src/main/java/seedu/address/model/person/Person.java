@@ -16,37 +16,40 @@ import seedu.address.model.tag.Tag;
  */
 public class Person {
 
-    // Identity fields
+    // Identity fields - used to uniquely identify a candidate
     private final Name name;
-    private final Phone phone;
     private final Email email;
+    private final Phone phone;
 
-    // Data fields
-    private final Address address;
+    // Professional fields - related to job application
     private final JobPosition jobPosition;
     private final Team team;
     private final Set<Tag> tags = new HashSet<>();
+
+    // Interview fields - related to interview scheduling
     private final StartTime startTime;
     private final Duration duration;
+
+    // Additional fields
+    private final Address address;
     private final Notes notes;
 
     /**
+     * Creates a Person with default empty values for optional fields.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, JobPosition jobPosition,
                   Team team, Set<Tag> tags) {
-
         this(name, phone, email, address, jobPosition, team, tags,
                 new Notes(""), new StartTime(""), new Duration(""));
-
     }
 
     /**
+     * Creates a Person with all fields specified.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, JobPosition jobPosition,
                   Team team, Set<Tag> tags, Notes notes, StartTime startTime, Duration duration) {
-
         requireAllNonNull(name, phone, email, address, jobPosition, team, tags, notes, startTime, duration);
 
         this.name = name;
@@ -61,40 +64,26 @@ public class Person {
         this.notes = notes;
     }
 
+    // Identity field accessors
     public Name getName() {
         return name;
-    }
-
-    public Phone getPhone() {
-        return phone;
     }
 
     public Email getEmail() {
         return email;
     }
 
-    public Address getAddress() {
-        return address;
+    public Phone getPhone() {
+        return phone;
     }
 
+    // Professional field accessors
     public JobPosition getJobPosition() {
         return jobPosition;
     }
 
     public Team getTeam() {
         return team;
-    }
-
-    public StartTime getStartTime() {
-        return startTime;
-    }
-
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public Notes getNotes() {
-        return notes;
     }
 
     /**
@@ -105,8 +94,26 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
+    // Interview field accessors
+    public StartTime getStartTime() {
+        return startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    // Additional field accessors
+    public Address getAddress() {
+        return address;
+    }
+
+    public Notes getNotes() {
+        return notes;
+    }
+
     /**
-     * Returns true if both candidates have the same name.
+     * Returns true if both candidates have the same email.
      * This defines a weaker notion of equality between two candidates.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -167,5 +174,4 @@ public class Person {
                 .add("duration", duration)
                 .toString();
     }
-
 }

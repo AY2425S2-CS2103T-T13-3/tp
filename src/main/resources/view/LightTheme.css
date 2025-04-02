@@ -1,8 +1,10 @@
+/* Base styles */
 .background {
     -fx-background-color: #ffffff;
     background-color: #ffffff;
 }
 
+/* Typography and text styles */
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "SF Pro Text", "Helvetica Neue", Helvetica, sans-serif;
@@ -24,6 +26,7 @@
     -fx-opacity: 1;
 }
 
+/* Form elements */
 .text-field {
     -fx-font-size: 12pt;
     -fx-font-family: "SF Pro Text", "Helvetica Neue", Helvetica, sans-serif;
@@ -33,6 +36,7 @@
     -fx-background-radius: 6px;
 }
 
+/* Tab styling */
 .tab-pane {
     -fx-padding: 0 0 0 1;
 }
@@ -43,6 +47,7 @@
     -fx-max-height: 0;
 }
 
+/* Table view styling */
 .table-view {
     -fx-base: #ffffff;
     -fx-control-inner-background: #ffffff;
@@ -80,6 +85,7 @@
     -fx-background-color: #0071e3;
 }
 
+/* Split pane styling */
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: #f5f5f7;
     -fx-border-color: transparent transparent transparent #e6e6e6;
@@ -91,6 +97,7 @@
     -fx-background-color: #ffffff;
 }
 
+/* List view styling */
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
@@ -128,6 +135,7 @@
     -fx-text-fill: #333333;
 }
 
+/* Cell styling */
 .cell_big_label {
     -fx-font-family: "SF Pro Display", "Helvetica Neue", Helvetica, sans-serif;
     -fx-font-size: 18px;
@@ -150,6 +158,7 @@
     -fx-padding: 2 0 2 0;
 }
 
+/* Layout containers */
 .stack-pane {
      -fx-background-color: #ffffff;
 }
@@ -160,6 +169,7 @@
      -fx-border-top-width: 1px;
 }
 
+/* Status bar styling */
 .status-bar {
     -fx-background-color: #f5f5f7;
 }
@@ -199,6 +209,7 @@
     -fx-text-fill: #666666;
 }
 
+/* Grid styling */
 .grid-pane {
     -fx-background-color: #ffffff;
     -fx-border-color: #e6e6e6;
@@ -209,6 +220,7 @@
     -fx-background-color: #ffffff;
 }
 
+/* Menu styling */
 .context-menu {
     -fx-background-color: #ffffff;
     -fx-border-color: #e6e6e6;
@@ -237,7 +249,7 @@
     -fx-background-color: #f5f5f7;
 }
 
-
+/* Button styling */
 .button {
     -fx-padding: 5 15 5 15;
     -fx-border-color: transparent;
@@ -282,6 +294,7 @@
     -fx-background-color: #0077ed;
 }
 
+/* Dialog styling */
 .dialog-pane {
     -fx-background-color: #ffffff;
 }
@@ -307,6 +320,7 @@
     -fx-text-fill: #333333;
 }
 
+/* Scrollbar styling */
 .scroll-bar {
     -fx-background-color: #f5f5f7;
     -fx-background-radius: 10px;
@@ -335,6 +349,7 @@
     -fx-padding: 8 1 8 1;
 }
 
+/* Card styling */
 #cardPane {
     -fx-background-color: #ffffff;
     -fx-border-width: 0;
@@ -344,6 +359,7 @@
     -fx-padding: 5 0 5 0;
 }
 
+/* Command interface styling */
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #0071e3;
@@ -372,6 +388,7 @@
     -fx-background-radius: 6px;
 }
 
+/* Tag styling */
 #tags {
     -fx-hgap: 7;
     -fx-vgap: 3;
@@ -421,7 +438,7 @@
     -fx-line-spacing: 4px;
 }
 
-/* Apple-specific tag colors for different departments */
+/* Department tag colors */
 .tag-hardware {
     -fx-background-color: #ff9500 !important;
 }
@@ -434,7 +451,7 @@
     -fx-background-color: #5ac8fa !important;
 }
 
-/* Apple-specific status indicators */
+/* Status indicators */
 .status-new {
     -fx-background-color: #34c759 !important;
 }
