@@ -278,10 +278,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -320,10 +316,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | Priority | As a …​   | I want to …​                                                  | So that I can…​                                                                       |
 |--------|-----------|---------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | `* * *` | new user  | see usage instructions                                        | refer to instructions when I forget how to use the App or when I start using the app. |
-| `* * *` | recruiter | add a candidate’s name, contact details, and role applied for | keep track of them easily.                                                            
-|
-| `* * *` | recruiter | list all candidates in the system                             | see at a glance who is currently in the database.                                     
-|
+| `* * *` | recruiter | add a candidate’s name, contact details, and role applied for | keep track of them easily.                                                            |
+| `* * *` | recruiter | list all candidates in the system                             | see at a glance who is currently in the database.                                     |
 | `* * *` | recruiter | remove outdated or irrelevant candidate records               | maintain a clean list.                                                                |
 | `* * *` | recruiter | find candidates by their names or skills                      | quickly locate specific individuals.                                                  |
 | `* * *` | recruiter | Record the candidate's interview performance                  | facilitate subsequent admission evaluation.                                           |
@@ -536,6 +530,19 @@ Given below are instructions to test the app manually.
 
 Enter exit in the command box. This will exit the app.
 
+### Adding a person
+
+1. Adding a person in the person list
+
+   1. Test case `add n/Byran high p/33665544 e/byranh@example.com a/123, Clementi Rd, 335544 j/Hardware Engineer tm/Machine Learning System t/C t/AI` <br>
+   Assumption: We assume there is no person with duplicate email. <br>
+   Excepted：Person added successfully and displayed in the list.
+   2. Test Case (duplicate email): `add n/Anna Doe p/12345678 e/byranh@example.com a/789, Pasir Panjang Rd, 112233 j/Software Engineer tm/Frontend` <br>
+   Assumption: We assume there is a person with duplicate email in the list. <br>
+   Excepted：Error message shown indicating email duplication.
+   3. Test Case : `add n/Anna Doe e/bryanh@ab.com a/789, Pasir Panjang Rd, 112233 j/Software Engineer ` <br>
+   Excepted：No person is added. Error message shown indicating wrong format.
+
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
@@ -551,26 +558,80 @@ Enter exit in the command box. This will exit the app.
    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-### Editing a person
+### Editing a person's information
 1. Editing a person in the person list
-- 1. Assumption: We assume the index here is valid if it is a positive integer
-Test case edit 1 g/female
-Expected: The gender of the first person in the list is changed to female
-Test case edit 0 g/female
-Expected: No person is edited, an error message will be displayed.
-Other incorrect edit command to try :
-edit 1 p/000
-edit 1 n/J@hn D*n
-Expected: Same as test case 3
-Other valid edit command to try :
-edit 1 n/Angelica Lee
-edit 1 p/96754328
-Expected: the field indicated by the prefix is edit to the information given.
+   1. Assumption: We assume the index here is valid if it is a positive integer <br>
+   Test case: `edit 1 t/Java` <br>
+   Expected: The Tag of the first person in the list is changed to Java
+   2. Test case: `edit 0 t/Java` <br>
+   Expected: No person is edited, an error message will be displayed.
+   3. Other invalid edit command to try : <br>
+   `edit -1 p/00` <br>
+   `edit 1 e/ab@cd` <br>
+   Expected: No person is edited, an error message will be displayed.
+   
+   4. Other valid edit command to try : <br>
+   `edit 1 n/Robin gen` <br>
+   `edit 1 p/96754328` <br>
+   Expected: the field indicated by the prefix is edit to the information given.
 
 ### Finding a person
-1. Test case: `find alice`
-   Expected: All persons with the name `alice` are shown in the list. Other persons are hidden.
-2. Test case: `find ab`
-   Expected: All persons with the name `ab` are shown in the list. Other persons are hidden.
+1. Finding a person by name
+   1. Test case: `find alice` <br>
+      Expected: All persons with the name that contains `alice` are shown in the list. Other persons are hidden.
+
+### Classifying Persons
+1. Classifying Persons by some of tags, team and jobPosition
+   1. Test case: `classify t/Python tm/Design j/Software Engineer` <br>
+     Expected: Displays persons matching all given filters.
+
+   2. Test case : `classify t/Python` <br>
+     Expected: Displays persons have tag Python.
+
+### Clearing All Persons
+1. Clearing All Persons in the list
+    1. Test Case: `clear` <br> Expected: All entries are deleted. Application shows an empty list.
+
+### Scheduling an Interview
+1. Scheduling an interview with duration for a person with positive integer indexes
+    1. Assumption: The minutes of StartTime and Duration must be multiple of 5.
+    2. Test case: `interview 1 2025-04-01 10:00 40` <br>
+      Expected: Interview scheduled with startTime 2025-04-01 10:00 and Duration 40;
+    3. Test case: `interview 0 2025-04-12 14:00 20` <br>
+       Expected: No interview is scheduled, an error message will be displayed.
+    4. Other invalid interview command to try: <br>
+       `interview 1 2025-04-12 14:00 23` <br>
+       `interview 1 2025-04-12 14:12 20` <br>
+       `interview 1 2025 04-12 14:12 15` <br>
+       Expected: No interview is scheduled, an error message will be displayed.
+
+### Adding a Note
+1. Adding a note for a person
+    1. Assumption: The index here is valid if it is a positive integer <br>
+    2. Test case: `note 1 Excellent technical skills observed during the interview.` <br>
+       Expected: Note successfully added to the person's details.
+
+### Sorting the List
+1. Sort the persons by interview startTime in the current list by ascending order. 
+    1. Test case: `sort` <br>
+       Expected: List sorted by person's interview time. For persons without interviews,they are displayed at the end of the list.
+
+### Undo 
+1. Restores the previous state
+    1. Assumption: Last command belongs to modifying commands (add, delete, edit, etc.)
+    2. Test case: `undo` <br>
+       Expected: Last operation is reversed. The person list is restored to the previous state.
+
+### Redo
+1. Reapplies the last undone action
+    1. Assumption: Last command is undo.
+    2. Test case: `redo` <br>
+       Expected: Previously undone action reapplied. The person list information is changed.
+
+### Viewing Help
+1. Viewing help for the commands
+  1. Test case: `help` <br>
+     Expected: Help window opens showing the link of User Guide.
 
 ## **Planned Enhancement**
+
