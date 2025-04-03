@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -80,7 +79,7 @@ public class InterviewCommand extends Command {
 
         model.setPerson(personToUpdate, updatedPerson);
 
-        lastCommand = this;
+        model.commit();
 
         return new CommandResult(String.format(MESSAGE_SET_INTERVIEW_SUCCESS,
                 targetIndex.getOneBased(), startTime.value, duration.getDurationInMinutes()));
@@ -102,21 +101,6 @@ public class InterviewCommand extends Command {
                 .add("startTime", startTime)
                 .add("duration", duration)
                 .toString();
-    }
-
-    @Override
-    public CommandResult undo(Model model) throws CommandException {
-        requireNonNull(model);
-
-        model.setPerson(updatedPerson, personToUpdate);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        Person temp = updatedPerson;
-        updatedPerson = personToUpdate;
-        personToUpdate = temp;
-
-        return new CommandResult(String.format(MESSAGE_SET_INTERVIEW_SUCCESS, targetIndex.getOneBased(),
-                updatedPerson.getStartTime(), updatedPerson.getDuration().getDurationInMinutes()));
     }
 
 }

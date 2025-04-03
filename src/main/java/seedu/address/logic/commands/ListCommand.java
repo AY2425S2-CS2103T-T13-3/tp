@@ -22,8 +22,4 @@ public class ListCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
-    @Override
-    public CommandResult undo(Model model) {
-        return new CommandResult("ListCommand should not appear in undo stack.");
-    }
 }

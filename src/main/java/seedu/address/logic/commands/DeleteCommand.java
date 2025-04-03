@@ -44,6 +44,7 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -54,17 +55,10 @@ public class DeleteCommand extends Command {
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
         deletedPerson = personToDelete;
-        lastCommand = this;
-        model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
-    }
 
-    @Override
-    public CommandResult undo(Model model) throws CommandException {
-        requireNonNull(model);
-        model.addPerson(deletedPerson);
-        lastCommand = new AddCommand(deletedPerson);
-        return new CommandResult(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(deletedPerson)));
+        model.commit();
+
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }
 
     @Override

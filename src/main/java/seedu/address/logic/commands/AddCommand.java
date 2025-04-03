@@ -65,17 +65,10 @@ public class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
-        lastCommand = this;
+        model.commit();
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
-    @Override
-    public CommandResult undo(Model model) throws CommandException {
-        model.deletePerson(toAdd);
-        lastCommand = new DeleteCommand(toAdd);
-        return new CommandResult(String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(toAdd)));
-    }
 
     @Override
     public boolean equals(Object other) {

@@ -98,7 +98,9 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        lastCommand = this;
+
+        model.commit();
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
@@ -122,21 +124,6 @@ public class EditCommand extends Command {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedJobPosition,
                 updatedTeam, updatedTags, notes, startTime, duration);
-    }
-
-    @Override
-    public CommandResult undo(Model model) throws CommandException {
-        requireNonNull(model);
-
-        model.setPerson(editedPerson, personToEdit);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        Person temp = personToEdit;
-        personToEdit = editedPerson;
-        editedPerson = temp;
-
-        lastCommand = this;
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
     @Override

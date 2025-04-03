@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -20,11 +22,12 @@ import seedu.address.model.person.Person;
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    private final AddressBook addressBook;
-    private final VersionedAddressBook versionedAddressBook;
+    private AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    private final List<AddressBook> addressBookStateList;
+    private int currentStatePointer;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -35,7 +38,9 @@ public class ModelManager implements Model {
         logger.fine("Initializing with RecruitIntel: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        this.versionedAddressBook = new VersionedAddressBook(addressBook);
+        addressBookStateList = new ArrayList<>();
+        addressBookStateList.add(new AddressBook(this.addressBook));
+        currentStatePointer = 0;
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
@@ -155,19 +160,56 @@ public class ModelManager implements Model {
         addressBook.sortPersons(comparator);
     }
 
-    @Override
-    public void commitAddressBook() {
-        versionedAddressBook.commit();
+
+    //=========== Undo/Redo =================================================================================
+    /**
+     * Commits the current state of the address book to the history.
+     * This method should be called after any changes to the address book.
+     */
+    public void commit() {
+        removeStatesAfterCurrentPointer();
+        addressBookStateList.add(new AddressBook(this.addressBook));
+        currentStatePointer++;
     }
 
-    @Override
-    public void undoAddressBook() throws VersionedAddressBook.NoUndoableStateException {
-        this.setAddressBook(versionedAddressBook.undo());
+    private void removeStatesAfterCurrentPointer() {
+        addressBookStateList.subList(currentStatePointer + 1, addressBookStateList.size()).clear();
     }
 
-    @Override
-    public void redoAddressBook() throws VersionedAddressBook.NoRedoableStateException {
-        versionedAddressBook.redo();
+    /**
+     * Reverts the model to the previous state in the history.
+     *
+     * @throws NoUndoableStateException if there is no undoable state in the model.
+     */
+    public void undo() throws NoUndoableStateException {
+        if (currentStatePointer == 0) {
+            throw new NoUndoableStateException();
+        }
+        currentStatePointer--;
+        this.setAddressBook(addressBookStateList.get(currentStatePointer));
     }
+
+    /**
+     * Reverts the model to the next state in the history.
+     *
+     * @throws NoRedoableStateException if there is no redoable state in the model.
+     */
+    public void redo() throws NoRedoableStateException {
+        if (currentStatePointer >= addressBookStateList.size() - 1) {
+            throw new NoRedoableStateException();
+        }
+        currentStatePointer++;
+        this.setAddressBook(addressBookStateList.get(currentStatePointer));
+    }
+
+    /**
+     * Exception to indicate that there is no undoable state in the model.
+     */
+    public static class NoUndoableStateException extends Exception {}
+
+    /**
+     * Exception to indicate that there is no redoable state in the model.
+     */
+    public static class NoRedoableStateException extends Exception {}
 
 }
