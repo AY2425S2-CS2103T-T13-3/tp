@@ -576,6 +576,11 @@ Furthermore, certain edits can cause RecruitIntel to behave in unexpected ways (
     * **Prevention**: Always create backups before manual edits
     * **Workaround**: Use the application's commands instead of manual file edits
 
+5. **Search Performance with Large Pool of Candidates**
+    * **Problem**: Slow search time when searching through extensive candidate lists
+    * **Solution**: Use more specific search criteria and combine classify with find
+    * **Prevention**: Archive or remove outdated candidates regularly
+    * **Tip**: Start with broader searches and refine gradually
 
 ## Glossary
 
