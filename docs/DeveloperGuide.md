@@ -621,5 +621,11 @@ Enter exit in the command box. This will exit the app.
   1. Test case: `help` <br>
      Expected: Help window opens showing the link of User Guide.
 
+### Undo
+1. Restores the previous state
+    1. Assumption: Last command belongs to modifying commands (add, delete, edit, etc.)
+    2. Test case: undo <br>
+       Expected: Last operation is reversed. The person list is restored to the previous state.
+
 ## **Planned Enhancement**
 
