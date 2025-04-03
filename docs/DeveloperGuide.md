@@ -2,8 +2,30 @@
 layout: page
 title: Developer Guide
 ---
-* Table of Contents
-{:toc}
+- [Acknowledgement](#Acknowledgements)
+- [Setting up, getting started](#Setting-up-getting-started)
+- [Design](#Design)
+  - [Architecture](#Architecture)
+  - [UI component](#UI-component)
+  - [Logic component](#Logic-component)
+  - [Model component](#Model-component)
+  - [Storage component](#Storage-component)
+  - [Common classes](#Common-classes)
+- [Implementation](#Implementation)
+  - [Proposed Undo/redo feature](#Proposed-Undo/redo-feature)
+  - [Proposed Data archiving](#Proposed-Data-archiving)
+- [Documentation, logging, testing, configuration, dev-ops](#Documentation-logging-testing-configuration-dev-ops)
+- [Appendix: Requirements](#Appendix-Requirements)
+  - [Product scope](#Product-scope)
+  - [User stories](#User-stories)
+  - [Use cases](#Use-cases)
+  - [Non-Functional Requirements](#Non-Functional-Requirements)
+  - [Glossary](#Glossary)
+- [Appendix: Instructions for manual testing](#Appendix-Instructions-for-manual-testing)
+  - [Launch and shutdown](#Launch-and-shutdown)
+  - [Deleting a person](#Deleting-a-person)
+  - [Editing a person](#Editing-a-person)
+  - [Finding a person](#Finding-a-person)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -331,7 +353,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     - Steps 2a1–2a2 are repeated until all data are valid.  
       Use case resumes from step 3.
 
-- **2b.** **System** detects a duplicate candidate (same name + phone).
+- **2b.** **System** detects a duplicate candidate (same email).
     - **2b1.** **System** notifies the recruiter that the candidate already exists.
     - Steps 2b1–2b2 are repeated until all data are valid.  
       Use case resumes from step 3.
@@ -436,11 +458,20 @@ Use case ends.
 3. **System** displays the sorted list.  
    Use case ends.
 
-## Use Case: UC10 - Undo Last Action
+## Use Case: UC10 - Undo/redo Actions
 **MSS**
 1. HR Recruiter chooses to undo the last action.
 2. **System** undoes the last action.  
    Use case ends.
+
+**Extensions**
+- **1a.** **System** detects that there are no actions to undo.
+    - **1a1.** **System** shows an error message and requests the recruiter to enter a valid action.  
+      Use case ends.
+    - *a. User chooses to redo the action.
+        - *a1. StoreClass restores the previous action and display a success message.
+
+Use case ends.
 
 ## Use Case: UC11 - Clear All Candidates
 **MSS**
@@ -585,20 +616,10 @@ Enter exit in the command box. This will exit the app.
     1. Test case: `sort` <br>
        Expected: List sorted by person's interview time. For persons without interviews,they are displayed at the end of the list.
 
-### Undo 
-1. Restores the previous state
-    1. Assumption: Last command belongs to modifying commands (add, delete, edit, etc.)
-    2. Test case: `undo` <br>
-       Expected: Last operation is reversed. The person list is restored to the previous state.
-
-### Redo
-1. Reapplies the last undone action
-    1. Assumption: Last command is undo.
-    2. Test case: `redo` <br>
-       Expected: Previously undone action reapplied. The person list information is changed.
-
 ### Viewing Help
 1. Viewing help for the commands
   1. Test case: `help` <br>
      Expected: Help window opens showing the link of User Guide.
+
+## **Planned Enhancement**
 
