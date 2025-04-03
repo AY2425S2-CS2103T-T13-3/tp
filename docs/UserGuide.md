@@ -538,6 +538,11 @@ Furthermore, certain edits can cause RecruitIntel to behave in unexpected ways (
 2. The tags or team names might be misspelled - check for typos
 3. The candidates might not have all the specified attributes - try searching with fewer criteria
 
+**Q**: Why can't I schedule an interview for a specific time?
+**A**: Check these potential issues:
+1. Ensure the date format is correct (YYYY-MM-DD)
+2. Verify the time is in 24-hour format
+3. Make sure the duration is a multiple of 5 minutes
 
 ## Known Issues
 
