@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-RecruitIntel is a **desktop application designed specifically for Apple's HR recruiters** to efficiently manage candidate information. While offering an easy-to-use visual interface, it features powerful text commands that help you process candidate information considerably faster than traditional mouse-based applications.
+RecruitIntel is a **desktop application designed specifically for Apple's HR recruiters** to efficiently manage candidate information. While offering an easy-to-use visual interface, it features powerful text commands that help process candidate information considerably faster than traditional mouse-based applications.
 ### Who is RecruitIntel For?
 **Primary Users:**
 * HR recruiters at Apple, particularly those handling:
@@ -14,7 +14,7 @@ RecruitIntel is a **desktop application designed specifically for Apple's HR rec
 **Prerequisites:**
 * Basic familiarity with command-line interfaces
 * Experience with candidate management systems
-* Access to a computer with Java 17 or later
+* Access to a computer with Java 17 or above
 
 ### What RecruitIntel Does
 **Core Features:**
@@ -34,7 +34,7 @@ Navigate through sections using the table of contents below:
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. Ensure you have Java `17` or above installed in your computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `recruitintel.jar` from our [releases page](https://github.com/AY2425S2-CS2103T-F14-3/tp/releases).
@@ -96,8 +96,8 @@ Navigate through sections using the table of contents below:
 
 * The `sort` command only sorts **currently displayed** candidates (i.e. those shown by the last command such as `classify`, `find`, etc.).
 
-* When using `classify` to filter candidates, it will show only candidates that match all your search criteria.
-  Example: `classify t/python tm/Design` shows candidates who have both Python skills and are in the Design team.
+* When using `classify` to filter candidates, it will show only candidates that match all of your search criteria.
+  Example: `classify t/python tm/Design` shows candidates who have both Python skills and applied for a position in the Design team.
 
 * For simple commands like `help`, `list`, `exit`, and `clear`, any extra information you type will be ignored.
   Example: typing `help 123` works the same as typing just `help`.
@@ -114,7 +114,7 @@ Shows a message explaining how to access the help page.
 help
 ```
 
-Expected output:
+Expected output: <br>
 ![result for help message command'](images/helpMessage.png)
 
 ### Adding a candidate: `add`
@@ -123,7 +123,8 @@ Adds a new candidate to RecruitIntel with their details and applied position.
 
 **Format**:
 ```
-add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS j/JOB_POSITION_APPLIED tm/TEAM_APPLIED [t/TAG]…​
+add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS j/JOB_POSITION_APPLIED 
+tm/TEAM_APPLIED [t/TAG]…​
 ```
 
 **Key behaviors**:
@@ -145,7 +146,7 @@ add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS j/JOB_POSITION_APPLIED tm/TEAM_APPLI
 
 💡 **Tips**:
 * Use meaningful tags to track candidate skills and experiences
-* Add multiple tags to make classification easier later
+* Add multiple tags to make classification easier later on
 
 ⚠️ **Warning**:
 * Avoid duplicate entries by checking for duplicates first
@@ -153,7 +154,8 @@ add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS j/JOB_POSITION_APPLIED tm/TEAM_APPLI
 Expected output:
 ```
 New candidate added: John Doe; Phone: 98765432; Email: johnd@example.com; 
-Address: 123 Apple Park Way; Job Position: Software Engineer; Team: iOS Development; Tags: [UIKit][Swift]
+Address: 123 Apple Park Way; Job Position: Software Engineer; 
+Team: iOS Development; Tags: [UIKit][Swift]
 ```
 
 ### Listing all candidates : `list`
@@ -188,7 +190,8 @@ Modifies existing candidate information in RecruitIntel.
 
 **Format**:
 ```
-edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [j/JOB_POSITION_APPLIED] [tm/TEAM_APPLIED] [t/TAG]…​
+edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [j/JOB_POSITION_APPLIED]
+ [tm/TEAM_APPLIED] [t/TAG]…​
 ```
 
 **Key behaviors**:
@@ -200,7 +203,7 @@ edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [j/JOB_POSITION_APPLIED] [tm
   ```
   edit 1 p/91234567 e/johndoe@example.com
   ```
-* Update job position applied and team applied to:
+* Update job position applied, team applied, and tags:
   ```
   edit 2 j/Machine Learning Engineer tm/AI Development t/Python t/TensorFlow
   ```
@@ -215,12 +218,14 @@ edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [j/JOB_POSITION_APPLIED] [tm
 
 Expected output:
 ```
-Edited Candidate: Bryan Tjandra; Phone: 91234567; Email: johndoe@example.com; Address: Blk 30 Geylang Street 29, #06-40; Job Position: Software Engineer; Team: iOS Development; Tags: [senior][mobile][swift]
+Edited Candidate: Bryan Tjandra; Phone: 91234567; Email: johndoe@example.com; 
+Address: Blk 30 Geylang Street 29, #06-40; Job Position: Software Engineer; 
+Team: iOS Development; Tags: [senior][mobile][swift]
 ```
 
 ### Classifying candidates by attributes: `classify`
 
-Groups and displays candidates based on their tags, teams, or job positions. This helps quickly find candidates matching specific criteria.
+Groups and displays candidates based on their tags, teams, and/or job positions. This helps quickly find candidates matching a specific criteria.
 
 **Format**:
 ```
@@ -237,7 +242,7 @@ classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]
   ```
   classify t/python
   ```
-* Find candidates with figma expertise, applying for Frontend Engineer positions at the Web Development team:
+* Find candidates with a figma tag, applying for Frontend Engineer positions at the Web Development team:
   ```
   classify t/figma j/Software Engineer tm/Web Development
   ```
@@ -252,7 +257,7 @@ classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]
 Expected output:
 ![result for 'classify t/mobile j/Software Engineer tm/iOS Development'](images/ClassifyScreenshot.png)
 
-### Locating candidates by name: `find`
+### Finding candidates by name: `find`
 
 Searches for candidates whose names contain any of the given keywords.
 
@@ -297,7 +302,8 @@ note INDEX NOTE_TEXT
 **Examples**:
 * Add interview observations:
   ```
-  note 3 Great system design skills, good cultural fit. Team lead interview recommended.
+  note 3 Great system design skills, good cultural fit.
+  Team lead interview recommended.
   ```
 
 💡 **Tips**:
@@ -310,7 +316,8 @@ note INDEX NOTE_TEXT
 
 Expected output:
 ```
-Note added to candidate #3: "Great system design skills, good cultural fit. Team lead interview recommended."
+Note added to candidate #3: "Great system design skills, good cultural fit. 
+Team lead interview recommended."
 ```
 
 ### Deleting a candidate : `delete`
@@ -342,7 +349,9 @@ delete INDEX
 
 Expected output:
 ```
-Deleted Candidate: John Doe; Phone: 98765432; Email: johnd@example.com; Address: 123 Apple Park Way; Job Position: Software Engineer; Team: iOS Development; Tags: [UIKit][Swift]
+Deleted Candidate: John Doe; Phone: 98765432; Email: johnd@example.com; 
+Address: 123 Apple Park Way; Job Position: Software Engineer; 
+Team: iOS Development; Tags: [UIKit][Swift]
 ```
 
 ### Scheduling an interview: `interview`
@@ -439,7 +448,6 @@ undo
 
 💡 **Tips**:
 * Use immediately after realizing a mistake
-* Save important changes before major operations
 
 ⚠️ **Warning**:
 * Cannot undo after closing the application
