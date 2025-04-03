@@ -5,8 +5,6 @@ title: User Guide
 
 RecruitIntel is a **desktop application designed specifically for Apple's HR recruiters** to efficiently manage candidate information. While offering an easy-to-use visual interface, it features powerful text commands that help you process candidate information considerably faster than traditional mouse-based applications.
 
-## Introduction
-
 ### Who is RecruitIntel For?
 
 **Primary Users:**
@@ -32,7 +30,7 @@ RecruitIntel is a **desktop application designed specifically for Apple's HR rec
 Navigate through sections using the table of contents below:
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -54,7 +52,7 @@ Navigate through sections using the table of contents below:
     * Run the application: `java -jar recruitintel.jar`
     * A screen similar to the one below should appear within 5 seconds:
 
-   ![Ui](images/Ui.png)
+   ![Ui](images/Ui.png){ width=800 }
 
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -119,7 +117,7 @@ help
 ```
 
 Expected output:
-![help message](images/helpMessage.png)
+![result for help message command'](images/helpMessage.png)
 
 ### Adding a candidate: `add`
 
@@ -204,7 +202,7 @@ edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [j/JOB_POSITION_APPLIED] [tm
   ```
   edit 1 p/91234567 e/johndoe@example.com
   ```
-* Change position and team:
+* Update job position applied and team applied to:
   ```
   edit 2 j/Machine Learning Engineer tm/AI Development t/Python t/TensorFlow
   ```
@@ -253,8 +251,8 @@ classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]
 
 ⚠️ **Warning**: Empty results might mean your criteria are too restrictive
 
-Expected successful output:
-![result for 'classify t/mobile j/Software Engineer tm/iOS Development'](images/ClassifyScreenshot.png)
+Expected output:
+![result for 'classify t/mobile j/Software Engineer tm/iOS Development'](images/ClassifyScreenshot.png){ width=800 }
 
 ### Locating candidates by name: `find`
 
@@ -313,7 +311,9 @@ note INDEX NOTE_TEXT
 * Stay within character limit
 
 Expected output:
-![result for 'note 1 Strong backend experience, but lacks iOS exposure`]()
+```
+Note added to candidate #3: "Great system design skills, good cultural fit. Team lead interview recommended."
+```
 
 ### Deleting a candidate : `delete`
 
@@ -534,6 +534,18 @@ Furthermore, certain edits can cause RecruitIntel to behave in unexpected ways (
 3. Delete `preferences.json` if it exists
 4. Contact support if issues persist
 
+**Q**: Why does my `classify` command return no results?
+**A**: This could happen for several reasons:
+1. Your search criteria might be too specific - try removing some filters
+2. The tags or team names might be misspelled - check for typos
+3. The candidates might not have all the specified attributes - try searching with fewer criteria
+
+**Q**: Why can't I schedule an interview for a specific time?
+**A**: Check these potential issues:
+1. Ensure the date format is correct (YYYY-MM-DD)
+2. Verify the time is in 24-hour format
+3. Make sure the duration is a multiple of 5 minutes
+
 ## Known Issues
 
 1. **Multiple Screen Display Issue**
@@ -545,6 +557,35 @@ Furthermore, certain edits can cause RecruitIntel to behave in unexpected ways (
     * **Problem**: Minimized Help Window doesn't respond to help command. The Help Window remains minimized
     * **Solution**: Manually restore the minimized Help Window
     * **Workaround**: Close and reopen application
+
+3. **Complex Command Formatting**
+    * **Problem**: Commands with multiple tags or long addresses might be difficult to format correctly
+    * **Solution**: Break down complex commands into smaller steps
+    * **Example**: Instead of adding all tags at once, use `edit` to add tags gradually
+    * **Prevention**: Use the `help` command to verify command format before execution
+
+4. **Data File Corruption**
+    * **Problem**: Application fails to start or behaves unexpectedly after manual data file edits
+    * **Solution**: Restore from backup or start with a fresh data file
+    * **Prevention**: Always create backups before manual edits
+    * **Workaround**: Use the application's commands instead of manual file edits
+
+
+## Glossary
+
+The following terms are used throughout this guide:
+
+* **Index**: A numerical identifier assigned to each candidate in the displayed list. When executing commands that require candidate selection (e.g., `delete 1`), use the number corresponding to the candidate's position in the current view. `delete 1` will delete the 1st candidate shown in the displayed list.
+
+* **Command**: A specific instruction entered into RecruitIntel to perform an action. Commands follow a structured format and are executed by pressing Enter. For example, the `add` command initiates the process of creating a new candidate record.
+
+* **Tag**: A label used to categorize and organize candidates based on specific attributes. Tags can represent skills, qualifications, or other relevant characteristics. For instance, `t/Swift` indicates proficiency in the Swift programming language.
+
+* **Command Format**: The specific structure required for entering commands, including prefixes (e.g., `n/` for name) and separators. This format ensures accurate interpretation of user input.
+
+* **JSON file**: A type of computer file that stores candidate information.
+
+* **Terminal/Command Prompt**: A program where you type commands to run RecruitIntel. It is a text-based way to start and control the application.
 
 ## Command Summary
 
