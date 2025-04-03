@@ -616,18 +616,6 @@ Enter exit in the command box. This will exit the app.
     1. Test case: `sort` <br>
        Expected: List sorted by person's interview time. For persons without interviews,they are displayed at the end of the list.
 
-### Undo 
-1. Restores the previous state
-    1. Assumption: Last command belongs to modifying commands (add, delete, edit, etc.)
-    2. Test case: `undo` <br>
-       Expected: Last operation is reversed. The person list is restored to the previous state.
-
-### Redo
-1. Reapplies the last undone action
-    1. Assumption: Last command is undo.
-    2. Test case: `redo` <br>
-       Expected: Previously undone action reapplied. The person list information is changed.
-
 ### Viewing Help
 1. Viewing help for the commands
   1. Test case: `help` <br>
