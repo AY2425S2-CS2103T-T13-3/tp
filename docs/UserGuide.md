@@ -3,10 +3,36 @@ layout: page
 title: User Guide
 ---
 
-RecruitIntel is a **desktop app for managing candidate information, optimized for use via a Command Line Interface** (CLI) while still providing the benefits of a Graphical User Interface (GUI). Designed for HR recruiters at Apple, RecruitIntel enables faster candidate tracking and organization compared to traditional GUI-based tools.
+RecruitIntel is a **desktop application designed specifically for Apple's HR recruiters** to efficiently manage candidate information. While offering an easy-to-use visual interface, it features powerful text commands that help you process candidate information considerably faster than traditional mouse-based applications.
+
+## Introduction
+
+### Who is RecruitIntel For?
+
+**Primary Users:**
+* HR recruiters at Apple, particularly those handling:
+    * Hardware teams (chip design, hardware engineering)
+    * Software teams (iOS, macOS, website development)
+    * Operations teams (retail, security, facilities)
+
+**Prerequisites:**
+* Basic familiarity with command-line interfaces
+* Experience with candidate management systems
+* Access to a computer with Java 17 or later
+
+### What RecruitIntel Does
+
+**Core Features:**
+* 🚀 Fast candidate information entry and search
+* 🏷️ Classification system for candidate organization
+* 📅 Interview scheduling and management
+* 📝 Note-taking capability for interview feedback
+* 💾 Automated saving of data after changes
+
+Navigate through sections using the table of contents below:
 
 * Table of Contents
-{:toc}
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -15,40 +41,39 @@ RecruitIntel is a **desktop app for managing candidate information, optimized fo
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `recruitintel.jar` from our [releases page](https://github.com/AY2425S2-CS2103T-F14-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for RecruitIntel.
+3. Create a dedicated folder for RecruitIntel:
+    * Choose a location with at least 1GB of free space
+    * Ensure you have write permissions for this location
+    * Copy the downloaded JAR file into this folder
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar recruitintel.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+4. Launch RecruitIntel:
+    * Open your terminal/command prompt
+    * Navigate to the folder containing the JAR file: `cd path/to/folder`
+    * Run the application: `java -jar recruitintel.jar`
+    * A screen similar to the one below should appear within 5 seconds:
+
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all candidates.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 j/Software Engineer tm/IOS Development` : Adds a candidate named `John Doe` applying for a `Software Engineer` position  in the `IOS Development` team.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 j/Software Engineer tm/IOS Development` : Adds a candidate named `John Doe` applying for `Software Engineer`  in the `IOS Development` team. 
+    * `note 1 Strong backend experience, but lacks iOS exposure.` : Adds a note to the 1st candidate in the list.
 
-   * `delete 3` : Deletes the 3rd candidate in the current list.
+    * `interview 1 2025-04-01 10:00 40` : Schedules a 40-minute interview for the 1st candidate, scheduled at 10:00 AM on April 1, 2025.
 
-   * `find John` : Finds candidates whose names contain the word `John`.
+    * `sort` : Sorts the candidates by ascending order of their scheduled interview time.
 
-   * `classify t/python tm/Design j/Software Engineer` : Lists candidates with tag `python`, in the `Design` team, or applying for `Software Engineer`.
+    * `undo` : Reverts the most recent change (e.g. adding, deleting, or editing a candidate).
 
-   * `note 1 Strong backend experience, but lacks iOS exposure.` : Adds a note to the 1st candidate in the list.
+    * `clear` : Deletes all candidates.
 
-   * `interview 1 2025-04-01 10:00 40` : Schedules a 40-minute interview for the 1st candidate starting at 10:00 AM on April 1, 2025.
 
-   * `sort` : Sorts the listed candidates by their scheduled interview time.
-
-   * `undo` : Reverts the most recent change and restores the previous state.
-
-   * `clear` : Deletes all candidates.
-
-   * `exit` : Exits the app.
-
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -58,230 +83,470 @@ RecruitIntel is a **desktop app for managing candidate information, optimized fo
 
 **:information_source: Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Replace words in `UPPER_CASE` with the required information.
+    * Example: in `add n/NAME`, replace `NAME` with the actual name like `add n/John Doe`
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/Engineer` or as `n/John Doe`.
+* Items in square brackets `[...]` are optional.
+    * Example: `[t/TAG]` can be used as `t/Python` or omitted entirely
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/software`, `t/software t/hardware` etc.
+* Items with `…`​ can be used multiple times or omitted.
+    * Example: `[t/TAG]…​` allows:
+        * No tags: ` `
+        * One tag: `t/Python`
+        * Multiple tags: `t/Python t/Java t/AWS`
 
-* Parameters can be in any order.<br>
+* You can enter the information in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* The `sort` command only sorts **currently displayed** candidates (i.e. those shown by the last command such as `classify`, `find`, etc.), not all candidates in RecruitIntel.
+* The `sort` command only sorts **currently displayed** candidates (i.e. those shown by the last command such as `classify`, `find`, etc.).
 
-* The `classify` command performs an **AND search** — only candidates matching **all** provided attributes (tag, team, job position) will be returned.
-    e.g. `classify t/python tm/Design` returns candidates who have the tag `python` **and** are in the `Design` team.
+* When using `classify` to filter candidates, it will show only candidates that match all your search criteria.
+  Example: `classify t/python tm/Design` shows candidates who have both Python skills and are in the Design team.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* For simple commands like `help`, `list`, `exit`, and `clear`, any extra information you type will be ignored.
+  Example: typing `help 123` works the same as typing just `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Shows a message explaining how to access the help page.
 
+**Format**:
+```
+help
+```
+
+Expected output:
 ![help message](images/helpMessage.png)
-
-Format: `help`
-
 
 ### Adding a candidate: `add`
 
-Adds a candidate to RecruitIntel.
+Adds a new candidate to RecruitIntel with their details and applied position.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS j/JOB_POSITION_APPLIED tm/TEAM_APPLIED [t/TAG]…​`
+**Format**:
+```
+add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS j/JOB_POSITION_APPLIED tm/TEAM_APPLIED [t/TAG]…​
+```
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A candidate can have any number of tags (including 0)
-</div>
+**Key behaviors**:
+* All details except tags are mandatory
+* Email must be in a valid format
+* Multiple tags can be added for better classification
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 j/Software Engineer tm/IOS Development`
-* `add n/Betsy Crowe t/cpp e/betsycrowe@example.com a/Newgate Prison p/1234567 j/ASIC Design Engineer tm/Hardware `
+**Examples**:
+* Adding an iOS developer:
+  ```
+  add n/John Doe p/98765432 e/johnd@example.com a/123 Apple Park Way 
+  j/Software Engineer tm/iOS Development t/Swift t/UIKit
+  ```
+* Adding a chip designer:
+  ```
+  add n/Jane Smith p/91234567 e/janes@example.com a/456 Infinite Loop 
+  j/Hardware Engineer tm/Chip Design t/Verilog t/ASIC
+  ```
+
+💡 **Tips**:
+* Use meaningful tags to track candidate skills and experiences
+* Add multiple tags to make classification easier later
+
+⚠️ **Warning**:
+* Avoid duplicate entries by checking for duplicates first
+
+Expected output:
+```
+New candidate added: John Doe; Phone: 98765432; Email: johnd@example.com; 
+Address: 123 Apple Park Way; Job Position: Software Engineer; Team: iOS Development; Tags: [UIKit][Swift]
+```
 
 ### Listing all candidates : `list`
 
-Shows a list of all candidates in RecruitIntel.
+Shows a complete list of all candidates in RecruitIntel.
 
-Format: `list`
+**Format**:
+```
+list
+```
+
+**Key behaviors**:
+* Shows all candidates regardless of previous filters
+* Displays candidates in order of when they were added
+
+💡 **Tips**:
+* Use this to reset view after filtering
+* Combine with `sort` to organize the full list
+
+Expected output:
+```
+Listed all candidates:
+1. John Doe (iOS Development)
+2. Jane Smith (Chip Design)
+3. Alex Yeoh (Machine Learning)
+...
+```
 
 ### Editing a candidate : `edit`
 
-Edits an existing candidate in RecruitIntel.
+Modifies existing candidate information in RecruitIntel.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [j/JOB_POSITION_APPLIED] [tm/TEAM_APPLIED] [t/TAG]…​`
+**Format**:
+```
+edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [j/JOB_POSITION_APPLIED] [tm/TEAM_APPLIED] [t/TAG]…​
+```
 
-* Edits the candidate at the specified `INDEX`. The index refers to the index number shown in the displayed candidate list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the candidate will be removed i.e adding of tags is not cumulative.
-* You can remove all the candidate’s tags by typing `t/` without
-    specifying any tags after it.
+**Key behaviors**:
+* `INDEX` must be a positive integer from the displayed list and not greater than the number of candidates in RecruitIntel
+* At least one field must be provided for editing
 
-Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` – Updates phone and email for the 1st candidate.
-* `edit 2 n/Alice Tan j/Machine Learning Engineer` – Updates name and job position for the 2nd candidate.
+**Examples**:
+* Update contact information:
+  ```
+  edit 1 p/91234567 e/johndoe@example.com
+  ```
+* Change position and team:
+  ```
+  edit 2 j/Machine Learning Engineer tm/AI Development t/Python t/TensorFlow
+  ```
+
+💡 **Tips**:
+* Use `list` to see all candidates first
+* An empty tag field (`t/`) removes all tags for that candidate
+
+⚠️ **Warning**:
+* Changes cannot be partially undone
+* All existing tags are replaced when editing tags
+
+Expected output:
+```
+Edited Candidate: Bryan Tjandra; Phone: 91234567; Email: johndoe@example.com; Address: Blk 30 Geylang Street 29, #06-40; Job Position: Software Engineer; Team: iOS Development; Tags: [senior][mobile][swift]
+```
 
 ### Classifying candidates by attributes: `classify`
 
-Classifies candidates who match any of the given attributes (tag, team, or job position).
+Groups and displays candidates based on their tags, teams, or job positions. This helps quickly find candidates matching specific criteria.
 
-Format: `classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]`
+**Format**:
+```
+classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]
+```
 
-* The search is case-insensitive. e.g. `python` will match `Python`
-* The order of the attributes does not matter. e.g. `t/python tm/Design` is equivalent to `tm/Design t/python`
-* Partial matches are supported. e.g. `engi` can be matched to `Engineer`
-* Candidates matching **all** provided attributes will be returned (i.e. `AND` search).
-  e.g. `t/python tm/Design` will return candidates who both have the tag `python` **and** are in the `Design` team.
+**Key behaviors**:
+* Case-insensitive matching (e.g., `python` matches `Python`)
+* Partial matching supported (e.g., `eng` matches `Engineer`)
+* Shows candidates that match **all** provided criteria
 
-Examples:
-* `classify t/python` returns candidates with the tag `Python`
-* `classify tm/Design j/Software Engineer` returns candidates in the `Design` team and with the job position `Software Engineer`
-* `classify t/python tm/Design j/Software Engineer` returns candidates matching all three attributes
-![result for 'classify t/python tm/ios development'](images/classifyTagAndRenameResult.png)
+**Examples**:
+* Find all candidates with Python expertise:
+  ```
+  classify t/python
+  ```
+* Find candidates with figma expertise, applying for Frontend Engineer positions at the Web Development team:
+  ```
+  classify t/figma j/Software Engineer tm/Web Development
+  ```
+
+💡 **Tips**:
+* Start with broader searches and refine as needed
+* Use partial matches for flexibility
+* Combine with `sort` command to organize results by interview time
+
+⚠️ **Warning**: Empty results might mean your criteria are too restrictive
+
+Expected successful output:
+![result for 'classify t/mobile j/Software Engineer tm/iOS Development'](images/ClassifyScreenshot.png)
 
 ### Locating candidates by name: `find`
 
-Finds candidates whose names contain any of the given keywords.
+Searches for candidates whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+**Format**:
+```
+find KEYWORD [MORE_KEYWORDS]
+```
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Partial words can also be matched e.g. `Han` will match `Hans`
-* Candidates matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+**Key behaviors**:
+* Case-insensitive search (e.g., `hans` matches `Hans`)
+* Order of keywords doesn't matter, e.g. `Hans Bo` will match `Bo Hans`
+* Partial word matching supported, e.g. `Han` will match `Hans`
+* Candidates matching at least one keyword will be returned e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+**Examples**:
+* Search by single name:
+  ```
+  find John
+  ```
+  
+💡 **Tips**:
+* Use shorter keywords for broader searches
+* Try different name variations
+
+Expected output:
+![result for 'find alex david'](images/FindScreenshot.png)
 
 ### Adding notes to a candidate: `note`
 
-Adds interviewer notes to the candidate identified by the index number in the currently displayed candidate list.
+Adds or updates interviewer notes for a candidate.
 
-Format: `note INDEX [NOTE_FOR_THE_INTERVIEWEE]`
+**Format**:
+```
+note INDEX NOTE_TEXT
+```
 
-* The specified `INDEX` must be a positive integer and must refer to a valid candidate in the displayed list.
-* The note text can be up to 450 characters.
-* Adding a note will overwrite any existing note for that candidate.
+**Key behaviors**:
+* `INDEX` must be a positive integer from the displayed list and not greater than the number of candidates in RecruitIntel
+* Note text has a maximum of 450 characters
+* New note overwrites any existing note for that candidate
 
-Examples:
-* `note 1 The interviewee really exceeded our expectations!` adds a note to the first candidate in the list
-* `note 3 Strong backend experience, but lacks iOS exposure.` adds a note to the third candidate
+**Examples**:
+* Add interview observations:
+  ```
+  note 3 Great system design skills, good cultural fit. Team lead interview recommended.
+  ```
 
+💡 **Tips**:
+* Be specific and objective in notes
+* Include key technical observations
+
+⚠️ **Warning**:
+* Cannot recover overwritten notes
+* Stay within character limit
+
+Expected output:
+![result for 'note 1 Strong backend experience, but lacks iOS exposure`]()
 
 ### Deleting a candidate : `delete`
 
-Deletes the specified candidate from RecruitIntel
+Removes a candidate from RecruitIntel permanently.
 
-Format: `delete INDEX`
+**Format**:
+```
+delete INDEX
+```
 
-* Deletes the candidate at the specified `INDEX`.
-* The index refers to the index number shown in the displayed candidate list.
-* The index **must be a positive integer** 1, 2, 3, …​
+**Key behaviors**:
+* Deletion is permanent (but can be undone)
 
-Examples:
-* `list` followed by `delete 2` deletes the 2nd candidate in RecruitIntel.
-* `find Betsy` followed by `delete 1` deletes the 1st candidate in the results of the `find` command.
+**Examples**:
+* Delete after listing:
+  ```
+  list
+  delete 2
+  ```
+
+💡 **Tips**:
+* Use `undo` if needed
+* Check index in current view
+
+⚠️ **Warning**:
+* Action cannot be reversed after closing app
+* Verify index in filtered lists
+
+Expected output:
+```
+Deleted Candidate: John Doe; Phone: 98765432; Email: johnd@example.com; Address: 123 Apple Park Way; Job Position: Software Engineer; Team: iOS Development; Tags: [UIKit][Swift]
+```
 
 ### Scheduling an interview: `interview`
 
-Sets the interview time for the candidate identified by the index number in the currently displayed candidate list.
+Sets or updates interview timing for a candidate.
 
-Format: `interview INDEX [START_TIME] [DURATION]`
+**Format**:
+```
+interview INDEX START_TIME DURATION
+```
 
-* `INDEX` must be a positive integer and refer to a valid candidate in the displayed list.
-* `START_TIME` must follow the format `yyyy-MM-dd HH:mm`, using 24-hour time.
-* `DURATION` must be a positive integer that is a multiple of 5 (e.g. 5, 10, 15...).
+**Key behaviors**:
+* START_TIME format: yyyy-MM-dd HH:mm
+* DURATION must be a multiple of 5 
+* Uses the 24-hour time format
 
-Examples:
-* `interview 1 2025-04-01 10:00 40` schedules a 40-minute interview starting at 10:00 AM on April 1, 2025 for the first candidate
-* `interview 2 2025-04-03 14:30 30` schedules a 30-minute interview for the second candidate on April 3, 2025 at 2:30 PM
+**Examples**:
+* Schedule a morning interview for 40 minutes:
+  ```
+  interview 1 2025-04-01 10:00 40
+  ```
+
+💡 **Tips**:
+* Leave buffer time between interviews
+* Use `sort` to see the schedule
+* Consider time zones for remote interviews
+* Standard durations:
+    - 30 mins: Initial screening
+    - 45 mins: Technical assessment
+    - 60 mins: Team interviews
+
+⚠️ **Warning**:
+* Verify date format carefully
+* Check for scheduling conflicts
+
+Expected output:
+```
+Interview set for candidate #1: Start = 2025-04-01 10:00, Duration = 40 minutes
+```
 
 ### Sorting candidates by interview time: `sort`
 
 Sorts the currently displayed candidates by their scheduled interview start times in ascending order.
 
-Format: `sort`
+**Format**:
+```
+sort
+```
 
-* Only candidates in the **current list** are sorted.  
-  For example, if the last command was `classify`, only the classified candidates will be sorted.
-* Candidates **without a scheduled interview** will appear **after** those with a scheduled time.
-* This command helps recruiters quickly view the upcoming interview order based on time.
+**Key behaviors**:
+* Only sorts the **current list** of displayed candidates
+* Candidates with interviews are sorted by start time (ascending)
+* Candidates without interviews appear at the end
 
-Examples:
-* After running `classify t/python`, running `sort` will sort the Python-tagged candidates by interview time.
-* After running `find John`, running `sort` will sort all candidates named John by their interview time.
+**Examples**:
+* View interviews for the iOS Development team in order:
+  ```
+  classify tm/iOS Development
+  sort
+  ```
 
-### Undoing the last command: `undo`
+💡 **Tips**:
+* Use after `classify` to organize filtered candidates
+* Combine with `interview` command for scheduling
 
-Reverts the address book to the state before the most recent command was executed.
+Expected output:
+```
+Sorted all displayed candidates by interview time.
+1. John Doe (Interview Start Time: 1 May 2025, 12:00 pm)
+2. Alice Tan (Interview Start Time: 3 May 2025, 2:30 pm)
+3. Bob Chen (Interview Start Time: 6 May 2025, 10:00 am)
+```
 
-Format: `undo`
+### Undoing changes: `undo`
 
-* Restores the model to its **previous state**, effectively undoing the last modifying command.
-* Can be used to undo commands such as `add`, `delete`, `edit`, `note`, `interview`, `classify`, etc.
-* Does **not** undo non-modifying commands like `find`, `list`, or `sort`.
+Reverts RecruitIntel to its state before the last modifying command.
 
-Examples:
-* After mistakenly deleting a candidate with `delete 3`, running `undo` will bring the candidate back.
-* After setting an incorrect interview time with `interview 2 2025-04-01 12:00 30`, running `undo` will revert it.
+**Format**:
+```
+undo
+```
+
+**Key behaviors**:
+* Restores the previous state
+* Works with modifying commands (`add`, `delete`, `edit`, etc.)
+* Multiple `undo` commands will revert multiple changes
+
+**Examples**:
+* Undo an accidental deletion:
+  ```
+  delete 3    // Oops, wrong candidate!
+  undo        // Candidate is restored
+  ```
+
+💡 **Tips**:
+* Use immediately after realizing a mistake
+* Save important changes before major operations
+
+⚠️ **Warning**:
+* Cannot undo after closing the application
+* Some commands cannot be undone (e.g., `clear`)
+
+### Redoing changes: `redo`
+
+Restores a previously undone command in RecruitIntel.
+
+**Format**:
+```
+redo
+```
+
+**Key behaviors**:
+* Restores the most recently undone change
+* Only works after an `undo` command
+* Multiple `redo` commands will restore multiple changes in sequence
+
+**Examples**:
+* Redo an undone deletion:
+  ```
+  delete 3           // Delete candidate
+  undo              // Oops, needed that deletion
+  redo              // Deletion restored
+  ```
+
+💡 **Tips**:
+* Use to restore changes if you undo too many times
+* Check the candidate list after redoing to verify changes
+
+⚠️ **Warning**:
+* Cannot redo after closing the application
+* Some commands cannot be redone (e.g., `clear`)
 
 
-### Clearing all entries : `clear`
+### Clearing all data : `clear`
 
-Clears all entries from RecruitIntel.
+Removes all candidate data from RecruitIntel.
 
-Format: `clear`
+**Format**:
+```
+clear
+```
 
 ### Exiting the program : `exit`
 
-Exits the program.
+Closes RecruitIntel and saves all data.
 
-Format: `exit`
+**Format**:
+```
+exit
+```
 
-### Saving the data
+### Data Management
 
-Candidate data is automatically saved after any command that modifies data. No manual saving is required.
+RecruitIntel handles your data with care and provides features to manage data:
 
-### Editing the data file
+#### Automatic Saving
+* All changes are saved immediately
+* No manual save required
+* Data does not disappear after exiting the application
 
-RecruitIntel data are saved automatically as a JSON file `[JAR file location]/data/recruitintel.json`. Advanced users are welcome to update data directly by editing that data file.
+#### Data File
+* Location: `[JAR file location]/data/recruitintel.json`
+* Format: JSON (human-readable)
+* Can be manually edited (advanced users)
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, RecruitIntel will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause RecruitIntel to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
-**Q**: How do I transfer my candidate data to another computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous RecruitIntel home folder.
+**Q**: How do I transfer my candidate data to another computer?
+**A**: Follow these steps:
+1. Install RecruitIntel on the new computer
+2. Locate the data file (`recruitintel.json`) on your old computer
+3. Copy this file to the same location on the new computer
+4. Start RecruitIntel on the new computer
 
---------------------------------------------------------------------------------------------------------------------
+**Q**: What should I do if the application won't start?
+**A**: Try these solutions:
+1. Verify Java 17 is installed correctly
+2. Check the data file for corruption
+3. Delete `preferences.json` if it exists
+4. Contact support if issues persist
 
-## Known issues
+## Known Issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+1. **Multiple Screen Display Issue**
+    * **Problem**: Screen may open off-screen when switching from multiple to single screen
+    * **Solution**: Delete `preferences.json` and run the application again
+    * **Prevention**: Close application before changing display setup
 
---------------------------------------------------------------------------------------------------------------------
+2. **Help Window Behavior**
+    * **Problem**: Minimized Help Window doesn't respond to help command. The Help Window remains minimized
+    * **Solution**: Manually restore the minimized Help Window
+    * **Workaround**: Close and reopen application
 
-## Command summary
+## Command Summary
 
 Action | Format, Examples
 --------|------------------
@@ -289,12 +554,14 @@ Action | Format, Examples
 **Classify** | `classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]`<br> e.g., `classify t/python tm/Design j/Software Engineer`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] j/JOB_POSITION_APPLIED tm/TEAM_APPLIED [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com j/Data Scientist`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [j/JOB_POSITION_APPLIED] [tm/TEAM_APPLIED] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com j/Data Scientist`
 **Exit** | `exit`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Help** | `help`
 **List** | `list`
-**Interview** | `interview INDEX [STARTTIME] [DURATION]`<br> e.g., `interview 1 2025-04-01 10:00 40`
-**Note** | `note INDEX [NOTE_FOR_THE_INTERVIEWEE]`<br> e.g., `note 1 The interviewee really exceeded our expectations!`
+**Interview** | `interview INDEX START_TIME DURATION`<br> e.g., `interview 1 2025-04-01 10:00 40`
+**Note** | `note INDEX NOTE_TEXT`<br> e.g., `note 1 The interviewee really exceeded our expectations!`
 **Sort** | `sort`
 **Undo** | `undo`
+**Redo** | `redo`
+
