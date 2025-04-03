@@ -37,7 +37,7 @@ Navigate through sections using the table of contents below:
 1. Ensure you have Java `17` or above installed in your computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `recruitintel.jar` from our [releases page](https://github.com/AY2425S2-CS2103T-F14-3/tp/releases).
+2. Download the latest `RecruitIntel.jar` from our [releases page](https://github.com/AY2425S2-CS2103T-F14-3/tp/releases).
 
 3. Create a dedicated folder for RecruitIntel:
     * Choose a location with at least 1GB of free space
@@ -451,7 +451,6 @@ undo
 
 ⚠️ **Warning**:
 * Cannot undo after closing the application
-* Some commands cannot be undone (e.g., `clear`)
 
 ### Redoing changes: `redo`
 
@@ -481,7 +480,6 @@ redo
 
 ⚠️ **Warning**:
 * Cannot redo after closing the application
-* Some commands cannot be redone (e.g., `clear`)
 
 
 ### Clearing all data : `clear`
