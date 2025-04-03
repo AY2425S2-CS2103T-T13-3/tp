@@ -3,8 +3,6 @@ layout: page
 title: User Guide
 ---
 
-# RecruitIntel User Guide
-
 RecruitIntel is a **desktop application designed specifically for Apple's HR recruiters** to efficiently manage candidate information. While offering an easy-to-use visual interface, it features powerful text commands that help you process candidate information considerably faster than traditional mouse-based applications.
 
 ## Introduction
