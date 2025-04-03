@@ -21,4 +21,6 @@ Person *--> Address
 Person *--> JobPosition
 Person *--> Notes
 Person *--> Team
+Person *--> StartTime
+Person *--> Duration
 @enduml
