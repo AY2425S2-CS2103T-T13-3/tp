@@ -62,15 +62,7 @@ Navigate through sections using the table of contents below:
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-    * `list` : Lists all candidates.
-
     * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 j/Software Engineer tm/IOS Development` : Adds a candidate named `John Doe` applying for a `Software Engineer` position  in the `IOS Development` team.
-
-    * `delete 3` : Deletes the 3rd candidate in the current list.
-
-    * `find John` : Finds candidates whose names contain the word `John`.
-
-    * `classify t/python tm/Design j/Software Engineer` : Lists candidates with tag `python`, in the `Design` team, and applying for a `Software Engineer` position.
 
     * `note 1 Strong backend experience, but lacks iOS exposure.` : Adds a note to the 1st candidate in the list.
 
@@ -80,11 +72,8 @@ Navigate through sections using the table of contents below:
 
     * `undo` : Reverts the most recent change (e.g. adding, deleting, or editing a candidate).
 
-    * `redo` : Reverts the last 'undo' action
-
     * `clear` : Deletes all candidates.
 
-    * `exit` : Exits the app.
 
 6. Refer to the [Features](#features) below for details of each command.
 
