@@ -4,9 +4,7 @@ title: User Guide
 ---
 
 RecruitIntel is a **desktop application designed specifically for Apple's HR recruiters** to efficiently manage candidate information. While offering an easy-to-use visual interface, it features powerful text commands that help you process candidate information considerably faster than traditional mouse-based applications.
-
 ### Who is RecruitIntel For?
-
 **Primary Users:**
 * HR recruiters at Apple, particularly those handling:
     * Hardware teams (chip design, hardware engineering)
@@ -19,14 +17,14 @@ RecruitIntel is a **desktop application designed specifically for Apple's HR rec
 * Access to a computer with Java 17 or later
 
 ### What RecruitIntel Does
-
 **Core Features:**
 * 🚀 Fast candidate information entry and search
 * 🏷️ Classification system for candidate organization
 * 📅 Interview scheduling and management
 * 📝 Note-taking capability for interview feedback
-* 💾 Automated saving of data after changes
+* 💾 Automated saving of data after changes <br>
 
+<br>
 Navigate through sections using the table of contents below:
 
 * Table of Contents
@@ -52,7 +50,7 @@ Navigate through sections using the table of contents below:
     * Run the application: `java -jar recruitintel.jar`
     * A screen similar to the one below should appear within 5 seconds:
 
-   ![Ui](images/Ui.png){ width=800 }
+   ![Ui](images/Ui.png)
 
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -252,7 +250,7 @@ classify [t/TAG] [tm/TEAM] [j/JOB_POSITION]
 ⚠️ **Warning**: Empty results might mean your criteria are too restrictive
 
 Expected output:
-![result for 'classify t/mobile j/Software Engineer tm/iOS Development'](images/ClassifyScreenshot.png){ width=800 }
+![result for 'classify t/mobile j/Software Engineer tm/iOS Development'](images/ClassifyScreenshot.png)
 
 ### Locating candidates by name: `find`
 
@@ -540,11 +538,6 @@ Furthermore, certain edits can cause RecruitIntel to behave in unexpected ways (
 2. The tags or team names might be misspelled - check for typos
 3. The candidates might not have all the specified attributes - try searching with fewer criteria
 
-**Q**: Why can't I schedule an interview for a specific time?
-**A**: Check these potential issues:
-1. Ensure the date format is correct (YYYY-MM-DD)
-2. Verify the time is in 24-hour format
-3. Make sure the duration is a multiple of 5 minutes
 
 ## Known Issues
 
