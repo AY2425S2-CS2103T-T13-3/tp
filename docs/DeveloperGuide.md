@@ -627,5 +627,12 @@ Enter exit in the command box. This will exit the app.
     2. Test case: undo <br>
        Expected: Last operation is reversed. The person list is restored to the previous state.
 
+### Redo
+1. Reapplies the last undone action
+    1. Assumption: Last command is undo.
+    2. Test case: redo <br>
+       Expected: Previously undone action reapplied. The person list information is changed.
+
+
 ## **Planned Enhancement**
 
