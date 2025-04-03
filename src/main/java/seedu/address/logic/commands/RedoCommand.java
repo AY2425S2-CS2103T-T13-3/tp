@@ -8,27 +8,26 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
 /**
- * Undo the most recent command that modifies the data.
+ * Redoes the most recent command that was undone.
  */
-public class UndoCommand extends Command {
+public class RedoCommand extends Command {
+    public static final String COMMAND_WORD = "redo";
 
-    public static final String COMMAND_WORD = "undo";
+    public static final String MESSAGE_SUCCESS = "Redo successful!";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Undo the most recent command that modifies the data.\n"
+    public static final String MESSAGE_REDO_NOT_AVAILABLE = "No command to redo!";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Redoes the last command that was undone.\n"
             + "Example: " + COMMAND_WORD;
-
-    public static final String MESSAGE_SUCCESS = "Undo successful!";
-
-    public static final String MESSAGE_UNDO_NOT_AVAILABLE = "No command to undo!";
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
         try {
-            model.undo();
-        } catch (ModelManager.NoUndoableStateException e) {
-            throw new CommandException(MESSAGE_UNDO_NOT_AVAILABLE);
+            model.redo();
+        } catch (ModelManager.NoRedoableStateException e) {
+            throw new CommandException(MESSAGE_REDO_NOT_AVAILABLE);
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
@@ -37,7 +36,7 @@ public class UndoCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || other instanceof UndoCommand; // instanceof handles nulls
+                || other instanceof RedoCommand; // instanceof handles nulls
     }
 
     @Override
@@ -45,5 +44,4 @@ public class UndoCommand extends Command {
         return new ToStringBuilder(this)
                 .toString();
     }
-
 }

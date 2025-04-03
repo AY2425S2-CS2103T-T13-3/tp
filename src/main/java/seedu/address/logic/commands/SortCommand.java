@@ -35,11 +35,6 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult undo(Model model) {
-        return new CommandResult("SortCommand should not appear in the undo stack");
-    }
-
-    @Override
     public boolean equals(Object other) {
         return other instanceof SortCommand; // no internal state, all instances are equal
     }

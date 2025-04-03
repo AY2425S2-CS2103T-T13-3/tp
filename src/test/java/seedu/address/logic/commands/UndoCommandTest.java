@@ -38,27 +38,4 @@ public class UndoCommandTest {
 
         assertEquals(model.getFilteredPersonList().size(), 7);
     }
-
-    @Test
-    public void execute_doubleUndoDeleteCommand_success() {
-        Person firstPerson = model.getFilteredPersonList().get(6);
-
-        DeleteCommand deleteCommand = new DeleteCommand(firstPerson);
-        try {
-            deleteCommand.execute(model);
-        } catch (CommandException e) {
-            e.printStackTrace();
-        }
-
-        UndoCommand undoCommand = new UndoCommand();
-
-        try {
-            undoCommand.execute(model);
-            undoCommand.execute(model);
-        } catch (CommandException e) {
-            e.printStackTrace();
-        }
-
-        assertEquals(model.getFilteredPersonList().size(), 6);
-    }
 }

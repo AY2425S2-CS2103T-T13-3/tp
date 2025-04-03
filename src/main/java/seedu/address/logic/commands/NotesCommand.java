@@ -78,23 +78,9 @@ public class NotesCommand extends Command {
         Person updatedPerson = createPersonWithNotes(personToAddNotesTo, notes);
         model.setPerson(personToAddNotesTo, updatedPerson);
         targetPerson = updatedPerson;
-        lastCommand = this;
-        return new CommandResult(String.format(MESSAGE_ADD_NOTES_SUCCESS, targetIndex.getOneBased(), notes.value));
-    }
 
-    @Override
-    public CommandResult undo(Model model) throws CommandException {
-        requireNonNull(model);
-        Person personToRemoveNotesFrom = targetPerson;
-        Person updatedPerson = createPersonWithNotes(personToRemoveNotesFrom, lastNotes);
+        model.commit();
 
-        Notes tempNotes = lastNotes;
-        lastNotes = notes;
-        notes = tempNotes;
-
-        model.setPerson(personToRemoveNotesFrom, updatedPerson);
-        targetPerson = updatedPerson;
-        lastCommand = this;
         return new CommandResult(String.format(MESSAGE_ADD_NOTES_SUCCESS, targetIndex.getOneBased(), notes.value));
     }
 

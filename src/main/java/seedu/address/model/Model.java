@@ -88,4 +88,8 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     void sortFilteredPersonList(Comparator<Person> comparing);
+
+    void commit();
+    void undo() throws ModelManager.NoUndoableStateException;
+    void redo() throws ModelManager.NoRedoableStateException;
 }

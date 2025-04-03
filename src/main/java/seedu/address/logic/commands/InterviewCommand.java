@@ -32,9 +32,9 @@ public class InterviewCommand extends Command {
     private StartTime startTime;
     private Duration duration;
 
-    private Person targetPerson;
-    private StartTime previousStartTime;
-    private Duration previousDuration;
+    private Person updatedPerson;
+    private Person personToUpdate;
+
 
     /**
      * @param targetIndex index of candidate to set interview for
@@ -61,15 +61,10 @@ public class InterviewCommand extends Command {
                     String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, lastShownList.size()));
         }
 
-        Person personToUpdate = lastShownList.get(targetIndex.getZeroBased());
-        targetPerson = personToUpdate;
-
-        // Save previous values for undo
-        previousStartTime = personToUpdate.getStartTime();
-        previousDuration = personToUpdate.getDuration();
+        personToUpdate = lastShownList.get(targetIndex.getZeroBased());
 
         // Construct updated person
-        Person updatedPerson = new Person(
+        updatedPerson = new Person(
                 personToUpdate.getName(),
                 personToUpdate.getPhone(),
                 personToUpdate.getEmail(),
@@ -83,7 +78,8 @@ public class InterviewCommand extends Command {
         );
 
         model.setPerson(personToUpdate, updatedPerson);
-        targetPerson = updatedPerson;
+
+        model.commit();
 
         return new CommandResult(String.format(MESSAGE_SET_INTERVIEW_SUCCESS,
                 targetIndex.getOneBased(), startTime.value, duration.getDurationInMinutes()));
@@ -105,43 +101,6 @@ public class InterviewCommand extends Command {
                 .add("startTime", startTime)
                 .add("duration", duration)
                 .toString();
-    }
-
-    @Override
-    public CommandResult undo(Model model) throws CommandException {
-        requireNonNull(model);
-        Person personToRestore = targetPerson;
-
-        // Restore the old StartTime and Duration
-        Person updatedPerson = new Person(
-                personToRestore.getName(),
-                personToRestore.getPhone(),
-                personToRestore.getEmail(),
-                personToRestore.getAddress(),
-                personToRestore.getJobPosition(),
-                personToRestore.getTeam(),
-                personToRestore.getTags(),
-                personToRestore.getNotes(),
-                previousStartTime,
-                previousDuration
-        );
-
-        // Swap current and previous for redo
-        StartTime tempStart = previousStartTime;
-        Duration tempDuration = previousDuration;
-        previousStartTime = startTime;
-        previousDuration = duration;
-        startTime = tempStart;
-        duration = tempDuration;
-
-        model.setPerson(personToRestore, updatedPerson);
-        targetPerson = updatedPerson;
-        lastCommand = this;
-
-        return new CommandResult(String.format(InterviewCommand.MESSAGE_SET_INTERVIEW_SUCCESS,
-                targetIndex.getOneBased(),
-                startTime != null ? startTime.value : "None",
-                duration != null ? duration.getDurationInMinutes() : 0));
     }
 
 }

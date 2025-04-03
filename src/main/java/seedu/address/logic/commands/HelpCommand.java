@@ -19,8 +19,4 @@ public class HelpCommand extends Command {
         return new CommandResult(SHOWING_HELP_MESSAGE, true, false);
     }
 
-    @Override
-    public CommandResult undo(Model model) {
-        return new CommandResult("HelpCommand should not appear in the undo stack");
-    }
 }
