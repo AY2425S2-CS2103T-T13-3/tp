@@ -31,7 +31,12 @@ public class InterviewCommandParser implements Parser<InterviewCommand> {
         String[] parts = trimmedArgs.split("\\s+");
 
         if (parts.length < 4) {
-            logger.info("Insufficient arguments provided for interview command");
+            logger.info("Too many arguments provided for interview command");
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, InterviewCommand.MESSAGE_USAGE));
+        }
+
+        if (parts.length > 4) {
+            logger.info("Over arguments provided for interview command");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, InterviewCommand.MESSAGE_USAGE));
         }
 
