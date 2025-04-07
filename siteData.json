@@ -110,6 +110,7 @@
     {
       "src": "UserGuide.md",
       "headings": {
+        "table-of-contents": "Table of Contents",
         "nusmeet-user-guide": "NUSMeet User Guide",
         "quick-start": "🛠️ Quick start",
         "ui-overview": "💻 UI Overview",
