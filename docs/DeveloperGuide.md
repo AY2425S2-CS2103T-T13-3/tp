@@ -42,7 +42,7 @@
 ## **Acknowledgements**
  
 - This project is built upon [SE-Educations's AddressBook Level-3](https://se-education.org/addressbook-level3/).
-
+- This project was assisted by AI tools such as Cursor, Copilot and ChatGPT where it assisted all members on some code/documentation generation and improvement.
 ---
 
 ## **Setting up, getting started**
